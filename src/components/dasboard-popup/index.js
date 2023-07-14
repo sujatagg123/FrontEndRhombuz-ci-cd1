@@ -1,0 +1,95 @@
+import React, { useEffect, useRef, useState } from 'react';
+import { PopupBackWrapper, PopupContainer, Xcircle } from './index.sc';
+import PropTypes from 'prop-types';
+import X from '../../assets/icons/X';
+
+const DashboardPopup = ({
+  popContent = <></>,
+  open = true,
+  toggler = () => {},
+  padding = '1.5rem 1.5rem',
+  Cross = false,
+  borderRadius = '1.25rem',
+  isPopup = false,
+}) => {
+  const popupRef = useRef();
+  const [newOpen, setNewOpen] = useState(false);
+  const [close, setClose] = useState(false);
+
+  const handleClickOutside = (event) => {
+    if (popupRef.current && !popupRef.current.contains(event.target)) {
+      toggler(!open);
+      setNewOpen(false);
+    }
+    document.removeEventListener('click', handleDocumentClick);
+  };
+
+  const handleDocumentClick = (event) => {
+    handleClickOutside(event);
+  };
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (!open) {
+        setClose(false);
+      }
+    }, 200);
+    return () => {
+      if (!isPopup) clearTimeout(timeoutId);
+      else setClose(false);
+    };
+  }, [open, isPopup]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (open) {
+        setNewOpen(true);
+        setClose(true);
+      } else {
+        setNewOpen(false);
+      }
+    }, 0);
+    return () => {
+      if (!isPopup) clearTimeout(timeoutId);
+    };
+  }, [open, isPopup]);
+
+  return (
+    <>
+      {(open || close) && (
+        <PopupBackWrapper onClick={handleClickOutside}>
+          <PopupContainer
+            borderRadius={borderRadius}
+            padding={padding}
+            open={newOpen}
+            ref={popupRef}
+          >
+            {popContent}
+            {Cross && (
+              <Xcircle onClick={() => toggler(false)}>
+                <X size={16} />
+              </Xcircle>
+            )}
+          </PopupContainer>
+        </PopupBackWrapper>
+      )}
+    </>
+  );
+};
+
+DashboardPopup.propTypes = {
+  popContent: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
+  children: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string,
+    PropTypes.node,
+  ]),
+  open: PropTypes.bool,
+  toggler: PropTypes.func,
+  padding: PropTypes.string,
+  Cross: PropTypes.bool,
+  borderRadius: PropTypes.string,
+  isPopup: PropTypes.bool,
+};
+
+export default DashboardPopup;
