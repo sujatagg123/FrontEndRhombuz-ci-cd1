@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useRef, useState } from 'react';
 import Proptypes from 'prop-types';
 import {
   AccessLevelBtnWrp,
@@ -8,8 +8,6 @@ import {
   CheckboxCell,
   FlexDiv,
   IconCon,
-  Loadbtn,
-  Loadbtnwpr,
   NoDataMsg,
   NoDataTableCell,
   Table,
@@ -31,12 +29,15 @@ import Avatar from '../avatar';
 import UserAccessLevelPopup from '../user-access-level';
 import AccessLevelBtn from '../access-level-button';
 import Spinner from '../spinner';
+import { useSelector } from 'react-redux';
+import { theme } from '../../constants/theme';
+import { debounce } from '../../constants/debounce';
 
 // add status-color configuration when available
 const StatusButton = ({ status }) => {
   return (
-    <ButtonCon bgColor={'#61D4A6'}>
-      <ButtonText>{status}</ButtonText>
+    <ButtonCon status={status}>
+      <ButtonText status={status}>{status}</ButtonText>
     </ButtonCon>
   );
 };
@@ -72,6 +73,10 @@ const Customtable = ({
       setSelectAll(false);
     }
   }, [selectedRows, tableData]);
+
+  const selectedTheme = useSelector((store) => {
+    return store?.theme.theme || {};
+  });
 
   const toggleRowSelection = (rowId) => {
     let updatedRows;
@@ -156,22 +161,6 @@ const Customtable = ({
     }
   };
 
-  const handleLoadClick = () => {
-    handleLoad();
-    setSelectAll(false);
-  };
-
-  const showLoadMore = () => {
-    if (pageParams && pageParams?.length) {
-      const pageNo = pageParams?.length;
-      if (pageLimit * pageNo > length) {
-        return false;
-      }
-      return true;
-    }
-    return false;
-  };
-
   const showNoDataMsg = () => {
     if (!infiniteLoading && !tableData?.length) {
       return true;
@@ -181,6 +170,48 @@ const Customtable = ({
       return false;
     }
   };
+
+  const observerTarget = useRef(null);
+
+  useEffect(() => {
+    const handleLoadClick = debounce(() => {
+      handleLoad();
+      setSelectAll(false);
+    }, 1000);
+
+    const showLoadMore = () => {
+      if (pageParams && pageParams?.length) {
+        const pageNo = pageParams?.length;
+        if (pageLimit * pageNo > length) {
+          return false;
+        }
+        return true;
+      }
+      return false;
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && showLoadMore()) {
+          handleLoadClick();
+          console.log('Intersection');
+        }
+      },
+      { threshold: 1 }
+    );
+
+    const currentValue = observerTarget.current;
+
+    if (currentValue) {
+      observer.observe(currentValue);
+    }
+
+    return () => {
+      if (currentValue) {
+        observer.unobserve(currentValue);
+      }
+    };
+  }, [observerTarget, handleLoad, length, pageLimit, pageParams]);
 
   if (isLoading) return <Spinner />;
 
@@ -209,7 +240,11 @@ const Customtable = ({
                   <TableHeaderValueWrp>
                     <span>{header?.label}</span>
                     <IconCon onClick={() => handleIconClick(header)}>
-                      {header?.isSortable ? <Triangle /> : <Info />}
+                      {header?.isSortable ? (
+                        <Triangle />
+                      ) : (
+                        <Info color={theme[selectedTheme].primary} />
+                      )}
                     </IconCon>
                   </TableHeaderValueWrp>
                 </TableHeader>
@@ -271,19 +306,10 @@ const Customtable = ({
                 </NoDataTableCell>
               </NoDataMsg>
             )}
+            <tr ref={observerTarget}></tr>
           </TableBody>
         </Table>
       </TableContainer>
-      {showLoadMore() && (
-        <Loadbtnwpr>
-          <Loadbtn onClick={handleLoadClick}>
-            load more +
-            {(pageParams.length + 1) * pageLimit <= length
-              ? pageLimit
-              : length - pageParams.length * pageLimit}
-          </Loadbtn>
-        </Loadbtnwpr>
-      )}
     </>
   );
 };

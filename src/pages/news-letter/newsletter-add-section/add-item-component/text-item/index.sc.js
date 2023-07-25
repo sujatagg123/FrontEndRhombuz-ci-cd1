@@ -4,13 +4,12 @@ export const TextContentWrp = styled.div`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: flex-start;
-  padding: 1rem;
-  gap: 0.625rem;
   width: 100%;
   height: 100%;
   position: relative;
-  padding: 2.1875rem 0rem;
+  background: ${({ theme }) => theme.background};
+  padding: 2.1875rem 1.25rem;
+  gap: 0.625rem;
 `;
 
 export const TextHeading = styled.h3`

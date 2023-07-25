@@ -45,15 +45,14 @@ export const TabBtn = styled.button`
 `;
 export const TabAdd = styled.div`
   display: flex;
-  padding: 0.47rem 0.75rem 0.45rem;
-  border-radius: 1.5rem;
+  padding: 0.53rem 0.75rem 0.47rem;
+  border-radius: 0.5rem;
   justify-content: center;
-  border: 1px solid #c3c7d9;
+  background-color: ${({ theme }) => theme.background};
   align-items: center;
-  height: 1.88rem;
+  height: 2rem;
   margin-top: 1px;
   cursor: pointer;
-  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.08);
 `;
 
 export const BentoSectionWrp = styled.div`
@@ -73,12 +72,11 @@ export const Custombtnwpr = styled.div`
   height: 2rem;
   display: flex;
   align-items: center;
-  border-radius: 1.5rem;
-  border: 1px solid #c3c7d9;
+  border-radius: 0.5rem;
   cursor: pointer;
   gap: 0.625rem;
   align-items: center;
-  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.1);
+  background-color: ${({ theme }) => theme.background};
 `;
 
 export const Custombtntxt = styled.div`

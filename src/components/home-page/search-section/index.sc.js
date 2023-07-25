@@ -9,10 +9,10 @@ export const SearchWrp = styled.div`
   transition: 600ms;
   z-index: 2;
   width: 43%;
-  border-radius: 0.938rem;
+  border-radius: 0.625rem;
   &.active {
     width: 100%;
-    height: 23.5rem;
+    height: 23rem;
     grid-template-rows: 1fr;
     transition: 600ms;
   }

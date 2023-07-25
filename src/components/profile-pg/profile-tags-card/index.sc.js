@@ -6,9 +6,9 @@ export const TagSecWrp = styled.div`
   flex-direction: column;
   align-items: center;
   gap: 2rem;
-  border-radius: 0.625rem;
   background: #fff;
-  box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.05);
+  border-radius: 0.3125rem;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.08);
 `;
 
 export const TagsWrp = styled.div`
@@ -63,7 +63,7 @@ export const SocialLinksWrp = styled.div`
   gap: 0.625rem;
 `;
 
-export const SocialIcon = styled.div`
+export const SocialIcon = styled.a`
   background: url(${(props) => props.image}),
     lightgray 0px -13.494px / 100% 139.714% no-repeat;
   height: 2rem;

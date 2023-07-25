@@ -226,6 +226,10 @@ const SearchResult = () => {
     queryClient.invalidateQueries(['articles', pageNum, type]);
   };
 
+  const handleSaveSearch = () => {
+    setShowSavedSearch((old) => !old);
+  };
+
   return (
     <SearchPageWrp>
       <AppBG bg1h={'11.5%'} bg1={bgsr} />
@@ -258,9 +262,10 @@ const SearchResult = () => {
                   searchFilter={searchedDetails?.filter}
                   handleFilterChange={handleFilterChange}
                   editMode={editMode}
+                  searchResult={true}
                 />
                 <ActionNavigationCon>
-                  <SaveSearchBtn>Save</SaveSearchBtn>
+                  <SaveSearchBtn onClick={handleSaveSearch}>Save</SaveSearchBtn>
                   <IconWrapper
                     className="center"
                     onClick={handleCancelSearchResult}
@@ -330,15 +335,17 @@ const SearchResult = () => {
         </SearchResultWrp>
         {(activeScreen === 'article' || activeScreen === '') && (
           <Paginatewpr fullScreen={activeScreen === 'article'}>
-            <Pagination
-              page={page}
-              prevClick={handlePage}
-              nextClick={handlePage}
-              handlePage={handlePage}
-              total={total}
-              align="end"
-              limit={50}
-            />
+            {total && (
+              <Pagination
+                page={page}
+                prevClick={handlePage}
+                nextClick={handlePage}
+                handlePage={handlePage}
+                total={total}
+                align="end"
+                limit={50}
+              />
+            )}
             <IconBox />
           </Paginatewpr>
         )}
@@ -346,10 +353,11 @@ const SearchResult = () => {
       <AppFooter />
       <DashboardPopup
         popContent={<DashSearchDrwr toggler={setShowSavedSearch} />}
-        padding="1.75rem"
+        padding="1.88rem"
         open={showSavedSearch}
         toggler={setShowSavedSearch}
-        borderRadius="1rem"
+        borderRadius="0.625rem"
+        width={'45vw'}
       />
       <AddtoCanvas
         open={showNewCandrwr}

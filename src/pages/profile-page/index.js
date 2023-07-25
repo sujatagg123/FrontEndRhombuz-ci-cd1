@@ -4,7 +4,6 @@ import {
   ArticlesSecHeader,
   ArticlesSection,
   ArticlesWrp,
-  Background,
   ChartSec,
   ChartSecHeader,
   ContentLeftSecWrp,
@@ -27,8 +26,7 @@ import {
   ReachnNbr,
   Reachtext,
   RightSec,
-  Tab,
-  TabLabel,
+  SectionWrp,
   TabsWrp,
   TagWrp,
   TopAuthorText,
@@ -54,6 +52,11 @@ import AppBG from '../../components/app-bg';
 import { useParams } from 'react-router';
 import { axiosGet } from '../../service';
 import { useQuery } from '@tanstack/react-query';
+import { theme } from '../../constants/theme';
+import { useSelector } from 'react-redux';
+import Tabs from '../../components/tabs';
+import { TitleBox } from '../../components/tabs/TabTitle';
+import AppFooter from '../../components/app-footer';
 
 const months = [
   {
@@ -84,12 +87,26 @@ const articleSort = [
     label: 'Top',
   },
 ];
+
+const TabOptions = [
+  {
+    id: 0,
+    content: '',
+    label: 'Articles',
+    type: 'articles',
+  },
+  {
+    id: 1,
+    content: '',
+    label: 'Twitter Feed',
+    type: 'twitter_feed',
+  },
+];
 const ProfilePage = () => {
   const param = useParams();
 
   const [socialLinks, setSocialLinks] = useState([]);
   const [isConnected, setIsConnected] = useState(false);
-  const [tabSelected, setTabSelected] = useState('articles');
 
   const [sort, setSort] = useState(months[0]);
   const [dropdownIsOpen, setDropdownIsOpen] = useState(false);
@@ -133,6 +150,10 @@ const ProfilePage = () => {
     return axiosGet(`/profiles/${param.profileId}`, {}, {});
   };
 
+  const selectedTheme = useSelector((store) => {
+    return store?.theme.theme || {};
+  });
+
   const {
     // isLoading - initial fetch
     isLoading,
@@ -150,6 +171,8 @@ const ProfilePage = () => {
       }
     },
   });
+
+  console.log(profile);
 
   const generateLinks = useCallback(() => {
     const tempArr = [];
@@ -169,9 +192,17 @@ const ProfilePage = () => {
     }
   }, [profile, generateLinks]);
 
-  function handleClick(tab) {
-    setTabSelected(tab);
-  }
+  const [index, setIndex] = useState(0);
+
+  const tabs = TabOptions?.map((ele, i) => ({
+    ...ele,
+    title: <TitleBox title={ele.label} />,
+    id: i,
+  }));
+
+  const handleTabs = (index) => {
+    setIndex(index);
+  };
 
   if (isLoading || isFetching) {
     return <div>Loading</div>;
@@ -184,155 +215,122 @@ const ProfilePage = () => {
   if (profile) {
     return (
       <>
-        <AppBG />
+        <AppBG bg1h={'15%'} bg1={theme[selectedTheme].backgroundColor} />
         <AppHeader />
-        <MediaDatabaseMiddle name={profile.name} />
-        <MainWrp>
-          <Background />
-          <ProfileTopWrp>
-            <ProfileImage image={profile.profilePicture} />
-            <TopWrp>
-              <NameWrp>
-                <NameText>{profile.name}</NameText>
-                <OccupationText>{profile.occupation}</OccupationText>
-              </NameWrp>
-              <TagWrp>
-                <JournalistWrp>
-                  <JournalistText>Journalist</JournalistText>
-                </JournalistWrp>
-                <TopAuthorWrp>
-                  <TopAuthorStar />
-                  <TopAuthorText>Top Author</TopAuthorText>
-                </TopAuthorWrp>
-              </TagWrp>
-            </TopWrp>
-          </ProfileTopWrp>
-          <ContentWrp>
-            <ContentLeftSecWrp>
-              <JournalistScoreCard journalistScore={profile.journalistScore} />
-              <ArticlesCard articles={profile.articles} />
-              <ProfileTagsCard tags={profile.tags} socialLinks={socialLinks} />
-              <ProfileButtonCard
-                isConnected={isConnected}
-                setIsConnected={setIsConnected}
-              />
-            </ContentLeftSecWrp>
-            <ContentRightSecWrp>
-              <AboutCard name={profile.name} about={profile.about} />
-              <ArticlesWrp>
-                <TabsWrp>
-                  <Tab
-                    onClick={() => handleClick('articles')}
-                    selected={tabSelected === 'articles'}
-                  >
-                    <TabLabel selected={tabSelected === 'articles'}>
-                      Articles
-                    </TabLabel>
-                  </Tab>
-                  <Tab
-                    onClick={() => handleClick('twitter')}
-                    selected={tabSelected === 'twitter'}
-                  >
-                    <TabLabel selected={tabSelected === 'twitter'}>
-                      Twitter Feed
-                    </TabLabel>
-                  </Tab>
-                </TabsWrp>
-                {tabSelected === 'articles' ? (
-                  <ArticlesSection>
-                    <LeftSec>
-                      <ChartSec>
-                        <ChartSecHeader>
+        <SectionWrp>
+          <MediaDatabaseMiddle name={profile.name} />
+          <MainWrp>
+            <ProfileTopWrp>
+              <ProfileImage image={profile.profilePicture} />
+              <TopWrp>
+                <NameWrp>
+                  <NameText>{profile.name}</NameText>
+                  <OccupationText>{profile.occupation}</OccupationText>
+                </NameWrp>
+                <TagWrp>
+                  <JournalistWrp>
+                    <JournalistText>Journalist</JournalistText>
+                  </JournalistWrp>
+                  <TopAuthorWrp>
+                    <TopAuthorStar />
+                    <TopAuthorText>Top Author</TopAuthorText>
+                  </TopAuthorWrp>
+                </TagWrp>
+              </TopWrp>
+            </ProfileTopWrp>
+            <ContentWrp>
+              <ContentLeftSecWrp>
+                <JournalistScoreCard
+                  journalistScore={profile.journalistScore}
+                />
+                <ArticlesCard articles={profile.articles} />
+                <ProfileTagsCard
+                  tags={profile.tags}
+                  socialLinks={socialLinks}
+                />
+                <ProfileButtonCard
+                  isConnected={isConnected}
+                  setIsConnected={setIsConnected}
+                />
+              </ContentLeftSecWrp>
+              <ContentRightSecWrp>
+                <AboutCard name={profile.name} about={profile.about} />
+                <ArticlesWrp>
+                  <TabsWrp>
+                    <Tabs
+                      activeColor={theme[selectedTheme].primary}
+                      inactiveColor={theme[selectedTheme].tabInactive}
+                      items={!tabs ? [{}] : tabs}
+                      onChange={handleTabs}
+                      paddingWrapper="0"
+                      wraperBorderWidth="0"
+                      gapitems="1rem"
+                      bottomBorderWidth="3px"
+                    />
+                  </TabsWrp>
+                  {index === 0 ? (
+                    <ArticlesSection>
+                      <LeftSec>
+                        <ChartSec>
+                          <ChartSecHeader>
+                            <Reachtext>
+                              Total Reach{' '}
+                              <ReachnNbr>
+                                {formatNumber(profile.reach)}
+                              </ReachnNbr>
+                            </Reachtext>
+                            <DropdownWrp>
+                              <Wrp>
+                                <Dropdowntext onClick={handleDropdownClick}>
+                                  {sort.label}
+                                </Dropdowntext>
+                                {dropdownIsOpen && (
+                                  <DropDownWrp>
+                                    {months.map((item, i) => {
+                                      return (
+                                        <Dropdowntext
+                                          key={i}
+                                          onClick={() => handleSelect(item)}
+                                        >
+                                          {item.label}
+                                        </Dropdowntext>
+                                      );
+                                    })}
+                                  </DropDownWrp>
+                                )}
+                              </Wrp>
+                              <DownPolygon
+                                fill={theme[selectedTheme].tableHeaderColor}
+                              />
+                            </DropdownWrp>
+                          </ChartSecHeader>
+                          <GraphWrp>
+                            <SlotDetails
+                              widget={profile.graphLeft}
+                              dashboardType="profile"
+                            />
+                          </GraphWrp>
+                        </ChartSec>
+                        <ArticlesSecHeader>
                           <Reachtext>
-                            Total Reach{' '}
-                            <ReachnNbr>{formatNumber(profile.reach)}</ReachnNbr>
+                            Total Articles{' '}
+                            <ReachnNbr>{profile.articlePosts.length}</ReachnNbr>
                           </Reachtext>
                           <DropdownWrp>
                             <Wrp>
-                              <Dropdowntext onClick={handleDropdownClick}>
-                                {sort.label}
+                              <Dropdowntext
+                                onClick={handleArticleDropdownClick}
+                              >
+                                {articlesSort.label}
                               </Dropdowntext>
-                              {dropdownIsOpen && (
+                              {articleDropdownIsOpen && (
                                 <DropDownWrp>
-                                  {months.map((item, i) => {
-                                    return (
-                                      <Dropdowntext
-                                        key={i}
-                                        onClick={() => handleSelect(item)}
-                                      >
-                                        {item.label}
-                                      </Dropdowntext>
-                                    );
-                                  })}
-                                </DropDownWrp>
-                              )}
-                            </Wrp>
-                            <DownPolygon fill={'#5C5E60'} />
-                          </DropdownWrp>
-                        </ChartSecHeader>
-                        <GraphWrp>
-                          <SlotDetails widget={profile.graphLeft} />
-                        </GraphWrp>
-                      </ChartSec>
-                      <ArticlesSecHeader>
-                        <Reachtext>
-                          Total Articles{' '}
-                          <ReachnNbr>{profile.articlePosts.length}</ReachnNbr>
-                        </Reachtext>
-                        <DropdownWrp>
-                          <Wrp>
-                            <Dropdowntext onClick={handleArticleDropdownClick}>
-                              {articlesSort.label}
-                            </Dropdowntext>
-                            {articleDropdownIsOpen && (
-                              <DropDownWrp>
-                                {articleSort.map((item, i) => {
-                                  return (
-                                    <Dropdowntext
-                                      key={i}
-                                      onClick={() => handleArticleSelect(item)}
-                                    >
-                                      {item.label}
-                                    </Dropdowntext>
-                                  );
-                                })}
-                              </DropDownWrp>
-                            )}
-                          </Wrp>
-                          <DownPolygon fill={'#5C5E60'} />
-                        </DropdownWrp>
-                      </ArticlesSecHeader>
-                      {profile.articlePosts.map((item, i) => {
-                        return (
-                          <ArticleCard
-                            key={i}
-                            title={item.title}
-                            content={item.content}
-                            link={item.link}
-                            date={item.date}
-                            country={item.country}
-                            reach={item.reach}
-                          />
-                        );
-                      })}
-                    </LeftSec>
-                    <RightSec>
-                      <ChartSec>
-                        <ChartSecHeader>
-                          <Reachtext>Articles By Topic</Reachtext>
-                          <DropdownWrp>
-                            <Wrp>
-                              <Dropdowntext onClick={handleGraphDropDownClick}>
-                                {graphDropDown.label}
-                              </Dropdowntext>
-                              {graphDropDownIsOpen && (
-                                <DropDownWrp>
-                                  {months.map((item, i) => {
+                                  {articleSort.map((item, i) => {
                                     return (
                                       <Dropdowntext
                                         key={i}
                                         onClick={() =>
-                                          handlGraphDropDownSelect(item)
+                                          handleArticleSelect(item)
                                         }
                                       >
                                         {item.label}
@@ -342,22 +340,76 @@ const ProfilePage = () => {
                                 </DropDownWrp>
                               )}
                             </Wrp>
-                            <DownPolygon fill={'#5C5E60'} />
+                            <DownPolygon
+                              fill={theme[selectedTheme].tableHeaderColor}
+                            />
                           </DropdownWrp>
-                        </ChartSecHeader>
-                        <GraphWrpRight>
-                          <SlotDetails widget={profile.graphRight} />
-                        </GraphWrpRight>
-                      </ChartSec>
-                    </RightSec>
-                  </ArticlesSection>
-                ) : (
-                  <TwitterSec>Twitter</TwitterSec>
-                )}
-              </ArticlesWrp>
-            </ContentRightSecWrp>
-          </ContentWrp>
-        </MainWrp>
+                        </ArticlesSecHeader>
+                        {profile.articlePosts.map((item, i) => {
+                          return (
+                            <ArticleCard
+                              key={i}
+                              title={item.title}
+                              content={item.content}
+                              link={item.link}
+                              date={item.date}
+                              country={item.country}
+                              reach={item.reach}
+                            />
+                          );
+                        })}
+                      </LeftSec>
+                      <RightSec>
+                        <ChartSec>
+                          <ChartSecHeader>
+                            <Reachtext>Articles By Topic</Reachtext>
+                            <DropdownWrp>
+                              <Wrp>
+                                <Dropdowntext
+                                  onClick={handleGraphDropDownClick}
+                                >
+                                  {graphDropDown.label}
+                                </Dropdowntext>
+                                {graphDropDownIsOpen && (
+                                  <DropDownWrp>
+                                    {months.map((item, i) => {
+                                      return (
+                                        <Dropdowntext
+                                          key={i}
+                                          onClick={() =>
+                                            handlGraphDropDownSelect(item)
+                                          }
+                                        >
+                                          {item.label}
+                                        </Dropdowntext>
+                                      );
+                                    })}
+                                  </DropDownWrp>
+                                )}
+                              </Wrp>
+                              <DownPolygon
+                                fill={theme[selectedTheme].tableHeaderColor}
+                              />
+                            </DropdownWrp>
+                          </ChartSecHeader>
+                          <GraphWrpRight>
+                            <SlotDetails
+                              widget={profile.graphRight}
+                              dashboardType="profile"
+                            />
+                          </GraphWrpRight>
+                        </ChartSec>
+                      </RightSec>
+                    </ArticlesSection>
+                  ) : (
+                    <TwitterSec>Twitter</TwitterSec>
+                  )}
+                </ArticlesWrp>
+              </ContentRightSecWrp>
+            </ContentWrp>
+          </MainWrp>
+        </SectionWrp>
+        <AppFooter />
       </>
     );
   }

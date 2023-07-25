@@ -8,6 +8,7 @@ export const GraphWrp = styled.div`
   width: 100%;
   box-sizing: border-box;
   border: 1.70675px solid #c3c7d9;
+  background: ${({ theme }) => theme.background};
 `;
 
 export const GraphContainer = styled.div`

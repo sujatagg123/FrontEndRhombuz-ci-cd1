@@ -5,8 +5,12 @@ import { Navigate, Outlet, useLocation } from 'react-router';
 
 const RequireAuth = ({ allowedRoles }) => {
   const location = useLocation();
+  const storedToken = localStorage.getItem('token');
+  const storeddata = JSON.parse(localStorage.getItem('data'));
   const data = useSelector((store) => {
-    return store?.user?.data || {};
+    return storedToken
+      ? { token: storedToken, ...storeddata }
+      : store?.user?.data || {};
   });
 
   return allowedRoles.includes(data.role) ? (

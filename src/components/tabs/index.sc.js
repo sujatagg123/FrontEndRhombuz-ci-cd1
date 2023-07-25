@@ -81,6 +81,7 @@ export const TabContainer = styled.div`
     inactiveCardBGColor,
     activeCardBGColor,
     cardBorderRadius,
+    inactiveFontWeight,
   }) =>
     getVariantStyles(
       variant,
@@ -91,7 +92,8 @@ export const TabContainer = styled.div`
       bottomBorderWidth,
       activeCardBGColor,
       inactiveCardBGColor,
-      cardBorderRadius
+      cardBorderRadius,
+      inactiveFontWeight
     )}
   ${({ isDisabled }) =>
     isDisabled && {
@@ -111,7 +113,8 @@ const getVariantStyles = (
   bottomBorderWidth,
   activeCardBGColor,
   inactiveCardBGColor,
-  cardBorderRadius
+  cardBorderRadius,
+  inactiveFontWeight
 ) => {
   switch (variant) {
     case 'card':
@@ -129,9 +132,7 @@ const getVariantStyles = (
             color: ${active ? activeColor || theme.main : ''};
           }
           color: ${
-            active
-              ? activeColor || theme.main
-              : inactiveColor || theme.contrastText
+            active ? activeColor || theme.main : inactiveColor || theme.darkText
           };
         `;
     case 'underline':
@@ -139,22 +140,18 @@ const getVariantStyles = (
         active ? bottomBorderWidth : bottomBorderWidth
       } solid ${active ? activeColor || theme.main : 'transparent'};
       color: ${
-        active ? activeColor || theme.main : inactiveColor || theme.contrastText
+        active ? activeColor || theme.main : inactiveColor || theme.darkText
       };
-      font-weight: ${active ? '600' : '400'}
+      font-weight: ${active ? '600' : inactiveFontWeight || '400'}
     `;
     default:
       return `
           border-bottom: .96px solid ${
-            active
-              ? activeColor || theme.main
-              : inactiveColor || theme.contrastText
+            active ? activeColor || theme.main : inactiveColor || theme.darkText
           };
           padding-bottom: .69rem;
           color: ${
-            active
-              ? activeColor || theme.main
-              : inactiveColor || theme.contrastText
+            active ? activeColor || theme.main : inactiveColor || theme.darkText
           };
         `;
   }

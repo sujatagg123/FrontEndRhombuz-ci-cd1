@@ -25,6 +25,17 @@ import { theme } from '../../constants/theme';
 import { Img } from '../../assets/img';
 import TileSelector from '../tile-selector';
 import { TileComponent } from '../custom-drawer/tile-component';
+import { useSelector } from 'react-redux';
+import { mediaType } from '../../graphs/utils/mockData';
+
+const graphData = {
+  title: 'Media Type',
+  subTitle: 'Total Articles',
+  slotType: 'half',
+  component: 'media_type',
+  graphType: 'column',
+  data: mediaType,
+};
 
 const AddGraphpop = ({
   toggler,
@@ -37,6 +48,9 @@ const AddGraphpop = ({
   const handleToggle = () => {
     toggler(false);
   };
+  const selectedTheme = useSelector((store) => {
+    return store?.theme.theme || {};
+  });
   const [checkedItem, setCheckedItem] = useState();
 
   const handleClick = (item) => {
@@ -49,7 +63,7 @@ const AddGraphpop = ({
 
   const handleSubmit = () => {
     if (checkedItem) {
-      // onSubmit(checkedItem);
+      onSubmit({ checkedItem, ...graphData });
       toggler(false);
     }
   };
@@ -62,7 +76,7 @@ const AddGraphpop = ({
           <Heaerlblwrp>{heading}</Heaerlblwrp>
         </Headerleftwpr>
         <Iconwpr onClick={handleToggle}>
-          <X color={theme.dark.primary} size={28} />
+          <X color={theme[selectedTheme].primary} size={28} />
         </Iconwpr>
       </Headerwrap>
       <MainBoxwpr>
@@ -86,14 +100,14 @@ const AddGraphpop = ({
         <ButtonsContainer>
           <ButtonBoxwpr
             onClick={handleToggle}
-            fontColor={theme.dark.secondaryText}
-            background={theme.dark.secondaryBackground}
+            fontColor={theme[selectedTheme].secondaryText}
+            background={theme[selectedTheme].secondaryBackground}
           >
             CANCEL
           </ButtonBoxwpr>
           <ButtonBoxwpr
-            fontColor={theme.dark.text}
-            background={theme.dark.primary}
+            fontColor={theme[selectedTheme].background}
+            background={theme[selectedTheme].primary}
             onClick={handleSubmit}
           >
             ADD

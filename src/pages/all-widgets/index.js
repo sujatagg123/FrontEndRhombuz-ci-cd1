@@ -8,6 +8,7 @@ import {
   SlotWrp,
 } from '../../components/search-result/index.sc';
 import { SlotBorder } from './index.sc';
+import { overviewWidgets } from '../../constants/widgets';
 
 const AllWidgets = () => {
   const [widgets, setWidgets] = useState({});
@@ -25,8 +26,6 @@ const AllWidgets = () => {
       if (data?.data?.data.length === 0) {
         setNoDataFromResponse(true);
       } else {
-        // const brandDashboardArray = data?.data?.data?.brandDashboard;
-        // const industryDashboardArray = data?.data?.data?.industryDashboard;
         const {
           overViewDetails: overview,
           brandDashboard: brand,
@@ -43,12 +42,12 @@ const AllWidgets = () => {
     return <div>No data</div>;
   }
   return (
-    <div>
+    <div style={{ height: '100vh', overflow: 'auto' }}>
       <SlotWrp>
         {Object.keys(widgets).length &&
           Object.keys(widgets).map((ele) => {
-            return widgets[ele].map((widget, i) =>
-              widget.slotType === 'full' ? (
+            return widgets[ele].map((widget, i) => {
+              return overviewWidgets[widget.component]?.slotType === 'full' ? (
                 <FullSlot className="graph-widget" key={`widget-${i}`}>
                   <SlotBorder>
                     <SlotDetails widget={widget} dashboardType={ele} />
@@ -60,25 +59,9 @@ const AllWidgets = () => {
                     <SlotDetails widget={widget} dashboardType={ele} />
                   </SlotBorder>
                 </HalfSlot>
-              )
-            );
+              );
+            });
           })}
-        {/* {widgets &&
-          Object.keys(widgets).map((widget, i) =>
-            widget.slotType === 'full' ? (
-              <FullSlot className="graph-widget" key={`widget-${i}`}>
-                <SlotBorder>
-                  <SlotDetails widget={widget} />
-                </SlotBorder>
-              </FullSlot>
-            ) : (
-              <HalfSlot className="graph-widget" key={`widget-${i}`}>
-                <SlotBorder>
-                  <SlotDetails widget={widget} />
-                </SlotBorder>
-              </HalfSlot>
-            )
-          )} */}
       </SlotWrp>
     </div>
   );

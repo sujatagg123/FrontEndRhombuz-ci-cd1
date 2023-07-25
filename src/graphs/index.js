@@ -18,6 +18,7 @@ import WordCloud from './WordCloud/graphWrapper';
 import RadialPieChart from './RadialPieChart/graphWrapper';
 import USMapChart from './USMap/graphWrapper';
 import WorldMapGraph from './WorldMapGraph/graphWrapper';
+import Butterfly from './Butterfly/graphWrapper';
 
 export {
   XAxis,
@@ -39,4 +40,5 @@ export {
   // NestedTree,
   // StackedLine
   USMapChart,
+  Butterfly,
 };

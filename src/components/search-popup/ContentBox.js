@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Proptypes, { object } from 'prop-types';
 import {
   CheckBox,
@@ -12,8 +12,6 @@ import {
   Framewrpr,
   Framleftpr,
   Iconwrpr,
-  Loadbtn,
-  Loadbtnwpr,
   MainBox,
   SearchIconwpr,
   SharedIconCir,
@@ -25,6 +23,7 @@ import { SearchDone } from '../../assets/icons/SearchDone';
 import { Save } from '../../assets/icons/Save';
 import { VerticleDots } from '../../assets/icons/VerticalDots';
 import { Triangle } from '../../assets/icons/Triangle';
+import { debounce } from '../../constants/debounce';
 
 export const color = ['#3579DE', '#EB566E', '#EA3FB8'];
 
@@ -85,6 +84,8 @@ export const ContentBox = ({
     }
   };
 
+  console.log('frames: ', Frames);
+
   const handleContentClick = (e, item) => {
     e.stopPropagation();
     handleClick(item);
@@ -97,6 +98,31 @@ export const ContentBox = ({
       click(item, type);
     }
   };
+
+  const listBoxRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const handleLoadClick = debounce(() => {
+        handleLoad();
+      }, 1000);
+      const { scrollTop, scrollHeight, clientHeight } = listBoxRef.current;
+      if (
+        scrollTop + clientHeight >= scrollHeight - 1 &&
+        data?.pages.length * 10 < length
+      ) {
+        handleLoadClick();
+      }
+    };
+
+    const currentListBoxRef = listBoxRef.current;
+
+    currentListBoxRef.addEventListener('scroll', handleScroll);
+
+    return () => {
+      currentListBoxRef.removeEventListener('scroll', handleScroll);
+    };
+  }, [handleLoad, data?.pages.length, length]);
 
   return (
     <>
@@ -124,14 +150,14 @@ export const ContentBox = ({
           {isIcons && <Framewrpr width="7rem">{false && <Save />}</Framewrpr>}
         </FramRightpr>
       </ContentHeader>
-      <ContentsContainer>
+      <ContentsContainer ref={listBoxRef}>
         {!isLoading ? (
           <>
             {data?.pages?.map((page, i) => (
               <div key={i}>
                 {page?.data?.data.map((content, j) => (
                   <Contentwrpr
-                    onClick={handleContentClick}
+                    onClick={(e) => handleContentClick(e, content)}
                     isPopup={isPopup}
                     key={j}
                   >
@@ -160,7 +186,7 @@ export const ContentBox = ({
                       )}
                     </MainBox>
                     <FramRightpr isPopup={isPopup} width={rightWidth}>
-                      {Frames.slice(1, Frames?.length).map((frame, i) => (
+                      {Frames.slice(1, Frames?.length - 1).map((frame, i) => (
                         <div key={i}>
                           {content[frame.type] &&
                             !(typeof content[frame.type] === 'object') &&
@@ -225,24 +251,6 @@ export const ContentBox = ({
           </>
         ) : (
           'Loading...'
-        )}
-        {length - data?.pageParams.length * pageLimit > 0 && (
-          <>
-            {!isLoading ? (
-              <Loadbtnwpr>
-                <Loadbtn onClick={handleLoad}>
-                  load more +
-                  {(data?.pageParams.length + 1) * pageLimit <= length
-                    ? pageLimit
-                    : length - data?.pageParams.length * pageLimit}
-                </Loadbtn>
-              </Loadbtnwpr>
-            ) : (
-              <Loadbtnwpr>
-                <div>Loading.....</div>
-              </Loadbtnwpr>
-            )}
-          </>
         )}
       </ContentsContainer>
     </>

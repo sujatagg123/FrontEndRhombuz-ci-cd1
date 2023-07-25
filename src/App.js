@@ -7,6 +7,8 @@ import AMXRoutes from './routes';
 import { theme } from './constants/theme';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { ErrorBoundary } from 'react-error-boundary';
+import ErrorHandler from './components/error-handler';
 
 // Create a client
 const queryClient = new QueryClient();
@@ -34,14 +36,19 @@ function App() {
   });
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={{ theme, ...theme[selectedTheme] }}>
-        <GlobalStyle />
-        {/* <NavSection /> */}
-        <AMXRoutes />
-      </ThemeProvider>
-      <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
-    </QueryClientProvider>
+    <ErrorBoundary
+      FallbackComponent={ErrorHandler}
+      onError={() => console.log('Error happened')}
+    >
+      <QueryClientProvider client={queryClient}>
+        <ThemeProvider theme={{ theme, ...theme[selectedTheme] }}>
+          <GlobalStyle />
+          {/* <NavSection /> */}
+          <AMXRoutes />
+        </ThemeProvider>
+        <ReactQueryDevtools initialIsOpen={false} position="bottom-right" />
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
 

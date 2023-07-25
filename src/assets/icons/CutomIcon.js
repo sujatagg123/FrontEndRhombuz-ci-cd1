@@ -1,6 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-const CutomIcon = () => {
+const CutomIcon = ({ color = '#656B8A' }) => {
   return (
     <svg
       width="15"
@@ -12,63 +13,63 @@ const CutomIcon = () => {
       <g clipPath="url(#clip0_3846_36322)">
         <path
           d="M2.86426 14.5993V9.93262"
-          stroke="#656B8A"
+          stroke={color}
           strokeWidth="1.4"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M2.86426 7.26628V2.59961"
-          stroke="#656B8A"
+          stroke={color}
           strokeWidth="1.4"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M8.19727 14.5996V8.59961"
-          stroke="#656B8A"
+          stroke={color}
           strokeWidth="1.4"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M8.19727 5.93294V2.59961"
-          stroke="#656B8A"
+          stroke={color}
           strokeWidth="1.4"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M13.5303 14.5999V11.2666"
-          stroke="#656B8A"
+          stroke={color}
           strokeWidth="1.4"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M13.5303 8.59961V2.59961"
-          stroke="#656B8A"
+          stroke={color}
           strokeWidth="1.4"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M0.864258 9.93262H4.86426"
-          stroke="#656B8A"
+          stroke={color}
           strokeWidth="1.4"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M6.19727 5.93262H10.1973"
-          stroke="#656B8A"
+          stroke={color}
           strokeWidth="1.4"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
           d="M11.5303 11.2666H15.5303"
-          stroke="#656B8A"
+          stroke={color}
           strokeWidth="1.4"
           strokeLinecap="round"
           strokeLinejoin="round"
@@ -86,6 +87,10 @@ const CutomIcon = () => {
       </defs>
     </svg>
   );
+};
+
+CutomIcon.propTypes = {
+  color: PropTypes.string,
 };
 
 export default CutomIcon;

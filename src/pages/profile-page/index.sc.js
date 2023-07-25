@@ -1,33 +1,34 @@
 import styled from 'styled-components';
 
 export const MainWrp = styled.div`
-  width: 100%;
+  margin: 0rem 2.5rem;
 `;
 
-export const Background = styled.div`
-  width: 100%;
-  height: 11.25rem;
-  background-color: lightblue;
+export const SectionWrp = styled.div`
+  height: 89vh;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 export const ProfileTopWrp = styled.div`
   width: 100%;
-  height: 4rem;
+  height: 100%;
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.05);
-  position: relative;
   display: flex;
   align-items: center;
-  padding-left: 14.15rem;
-  background-color: #fff;
+  padding: 1.96rem 1.16rem;
+  background-color: ${({ theme }) => theme.background};
+  gap: 1.64rem;
 `;
 
 export const ProfileImage = styled.div`
-  width: 6.25rem;
-  height: 6.25rem;
+  width: 4.375rem;
+  height: 4.375rem;
   border-radius: 6.25rem;
-  border: 5px solid #fff;
+  border: 5px solid ${({ theme }) => theme.background};
   background: url(${(props) => props.image}), lightgray 50% / cover no-repeat;
-  position: absolute;
   left: 5.9rem;
   bottom: 0.78rem;
 `;
@@ -36,7 +37,7 @@ export const TopWrp = styled.div`
   display: inline-flex;
   justify-content: flex-start;
   align-items: center;
-  gap: 1.875rem;
+  gap: 1.88rem;
   width: 100%;
 `;
 
@@ -50,21 +51,24 @@ export const NameWrp = styled.div`
 export const NameText = styled.h4`
   margin: 0;
   padding: 0;
-  color: #000;
-  font-size: 1.125rem;
+  color: '#000000';
+  font-size: 1.25rem;
   font-style: normal;
-  font-weight: 600;
-  line-height: normal;
+  font-weight: 700;
+  line-height: 1.5625rem; /* 125% */
+  letter-spacing: -0.025rem;
 `;
 export const OccupationText = styled.p`
   margin: 0;
   padding: 0;
-  color: var(--grey-grey-1, #555);
-  text-align: center;
-  font-size: 0.75rem;
+  color: ${(theme) => theme.text};
+
+  font-family: Inter;
+  font-size: 0.8125rem;
   font-style: normal;
   font-weight: 500;
-  line-height: 1rem;
+  line-height: 1.25rem; /* 153.846% */
+  letter-spacing: -0.01625rem;
 `;
 
 export const TagWrp = styled.div`
@@ -123,10 +127,10 @@ export const TopAuthorText = styled.p`
 
 export const ContentWrp = styled.div`
   width: 100%;
-  background: #f3f4f8;
-  padding: 1.22rem 2rem;
+  background: ${({ theme }) => theme.newsLetterBackground};
+  padding: 1.28rem 0;
   display: flex;
-  gap: 0.56rem;
+  gap: 1.26rem;
 `;
 
 export const ContentLeftSecWrp = styled.div`
@@ -147,15 +151,17 @@ export const ContentRightSecWrp = styled.div`
 
 export const ArticlesWrp = styled.div`
   width: 100%;
-  background-color: #fff;
+  background-color: ${({ theme }) => theme.background};
   border-radius: 0.625rem;
+  border-radius: 0.3125rem;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.08);
 `;
 
 export const TabsWrp = styled.div`
   display: flex;
   gap: 0;
   padding: 0.72rem 0rem 0rem 2.18rem;
-  border-bottom: 1px solid #eceff3;
+  border-bottom: 1px solid ${({ theme }) => theme.newsLetterBackground};
 `;
 
 export const Tab = styled.div`
@@ -206,7 +212,7 @@ export const ChartSecHeader = styled.div`
   align-items: flex-start;
   flex-shrink: 0;
   align-self: stretch;
-  border-bottom: 1px solid var(--greys-g-01, #eceff3);
+  border-bottom: 1px solid ${({ theme }) => theme.newsLetterBackground};
 `;
 
 export const GraphWrp = styled.div`
@@ -223,7 +229,7 @@ export const GraphWrpRight = styled.div`
 export const Reachtext = styled.p`
   margin: 0;
   padding: 0;
-  color: #5c5e60;
+  color: ${({ theme }) => theme.tableHeaderColor};
   font-size: 0.9375rem;
   font-style: normal;
   font-weight: 700;
@@ -253,7 +259,7 @@ export const Dropdowntext = styled.p`
   cursor: pointer;
   margin: 0;
   padding: 0;
-  color: #5c5e60;
+  color: ${({ theme }) => theme.tableHeaderColor};
   font-size: 0.8125rem;
   font-style: normal;
   font-weight: 700;
@@ -282,8 +288,8 @@ export const DropDownWrp = styled.div`
 export const RightSec = styled.div`
   width: 37%;
   display: flex;
-  border-bottom: 1px solid #eceff3;
-  border-left: 1px solid #eceff3;
+  border-bottom: 1px solid ${({ theme }) => theme.newsLetterBackground};
+  border-left: 1px solid ${({ theme }) => theme.newsLetterBackground};
   align-items: flex-start;
   justify-content: flex-start;
 `;
@@ -299,5 +305,5 @@ export const ArticlesSecHeader = styled.div`
   align-items: center;
   flex-shrink: 0;
   align-self: stretch;
-  border-bottom: 1px solid #eceff3;
+  border-bottom: 1px solid ${({ theme }) => theme.newsLetterBackground};
 `;

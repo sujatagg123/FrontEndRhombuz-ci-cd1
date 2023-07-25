@@ -14,7 +14,7 @@ const TileSelector = ({
   InnerChild,
   disableSelection = false,
 }) => {
-  console.log(elements, 'sujay elements');
+  // console.log(elements, 'sujay elements');
   const [tiles, setTiles] = useState([]);
   const containerRef = useRef();
 

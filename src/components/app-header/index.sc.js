@@ -36,6 +36,7 @@ export const NavIcon = styled.img`
   width: 1.25rem;
   height: 1.25rem;
   margin: 0rem 1rem;
+  cursor: pointer;
 `;
 
 export const NavUserProfile = styled.div`

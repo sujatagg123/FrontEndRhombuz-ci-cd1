@@ -14,22 +14,25 @@ export const Dashboardwpr = styled.div`
 
 export const DashboardHeader = styled.div`
   width: 100%;
-  background: ${({ theme }) => theme.secondaryBackground};
+  background: #fff;
   padding: 1.25rem 2.5rem;
   height: 4.25rem;
   box-sizing: border-box;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: flex; */
   align-items: center;
+  position: relative;
 `;
 
 export const HeaderRight = styled.div`
   display: flex;
+  position: absolute;
+  right: 5rem;
 `;
 
 export const HeaderTitlewpr = styled.div`
   font-size: 1.4rem;
-  color: ${({ theme }) => theme.seecondaryText};
+  color: ${({ theme }) => theme.secondaryText};
   font-weight: 600;
 `;
 

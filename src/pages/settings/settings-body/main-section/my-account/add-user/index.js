@@ -4,7 +4,9 @@ import {
   AccessDescription,
   AccessLevelWrapper,
   AccessListContainer,
+  AccessListIconWrp,
   AccessListItem,
+  AccessOptionTextWrp,
   AccessTitle,
   ButtonContainer,
   DrawerContentBox,
@@ -15,14 +17,19 @@ import {
   Headerwrap,
   Heading,
   Iconwpr,
+  InputHeader,
   MainBoxwpr,
   SearchInputs,
   SearchInputsWrp,
   SectionTitle,
 } from './index.sc';
-import X from '../../../../../../assets/icons/X';
 import { theme } from '../../../../../../constants/theme';
 import { Button } from '../../../../../../components/button';
+import Close from '../../../../../../assets/icons/Close';
+import { useSelector } from 'react-redux';
+import AddAdminIcon from '../../../../../../assets/icons/AddAdminIcon';
+import AddAnalystIcon from '../../../../../../assets/icons/AddAnalystIcon';
+import AddUserIcon from '../../../../../../assets/icons/AddUserIcon';
 
 const accessLevels = [
   {
@@ -47,12 +54,12 @@ const accessLevels = [
 
 const btnStyle = {
   color: theme.dark.text,
-  fontSize: '0.8rem',
-  fontWeight: '700',
-  lineHeight: '1.125rem',
-  letterSpacing: '0.26px',
-  textTransform: 'uppercase',
-  borderRadius: '0.39rem',
+  fontFamily: ' Inter',
+  fontSize: '0.9375rem',
+  fontStyle: 'normal',
+  fontWeight: '400',
+  lineHeight: '1.125rem' /* 120% */,
+  letterSpacing: '-0.01875rem',
 };
 
 const initialState = {
@@ -68,6 +75,10 @@ const AddUserPopup = ({
 }) => {
   const [selectedLevel, setSelectedLevel] = useState('admin');
   const [formFields, setFormFields] = useState(initialState);
+
+  const selectedTheme = useSelector((store) => {
+    return store?.theme.theme || {};
+  });
 
   const handleToggle = () => {
     toggler(false);
@@ -101,13 +112,14 @@ const AddUserPopup = ({
           <Heading>{heading}</Heading>
         </Headerleftwpr>
         <Iconwpr onClick={handleToggle}>
-          <X color={theme.dark.primary} size={28} />
+          <Close color={theme[selectedTheme].text} height={'34'} width={'34'} />
         </Iconwpr>
       </Headerwrap>
       <MainBoxwpr>
         <FormFieldsWrapper>
           <FlexDiv>
             <SearchInputsWrp>
+              <InputHeader>First Name</InputHeader>
               <SearchInputs
                 placeholder="First Name"
                 name="firstName"
@@ -116,6 +128,8 @@ const AddUserPopup = ({
               />
             </SearchInputsWrp>
             <SearchInputsWrp>
+              <InputHeader>Last Name</InputHeader>
+
               <SearchInputs
                 placeholder="Last Name"
                 name="lastName"
@@ -126,6 +140,7 @@ const AddUserPopup = ({
           </FlexDiv>
           <FlexDiv>
             <SearchInputsWrp>
+              <InputHeader>Email Address</InputHeader>
               <SearchInputs
                 placeholder="Email Address"
                 type="email"
@@ -137,7 +152,7 @@ const AddUserPopup = ({
           </FlexDiv>
         </FormFieldsWrapper>
         <AccessLevelWrapper>
-          <SectionTitle>Access Level</SectionTitle>
+          <SectionTitle>Alert Me for Changes in Volume</SectionTitle>
           <AccessListContainer>
             {accessLevels.map((level, i) => (
               <AccessListItem
@@ -145,8 +160,15 @@ const AddUserPopup = ({
                 className={level.value === selectedLevel ? 'selected' : ''}
                 onClick={() => handleSelectLevel(level.value)}
               >
-                <AccessTitle>{level.title}</AccessTitle>
-                <AccessDescription>{level.description}</AccessDescription>
+                <AccessListIconWrp>
+                  {level.value === 'admin' && <AddAdminIcon />}
+                  {level.value === 'analyst' && <AddAnalystIcon />}
+                  {level.value === 'reader' && <AddUserIcon />}
+                </AccessListIconWrp>
+                <AccessOptionTextWrp>
+                  <AccessTitle>{level.title}</AccessTitle>
+                  <AccessDescription>{level.description}</AccessDescription>
+                </AccessOptionTextWrp>
               </AccessListItem>
             ))}
           </AccessListContainer>
@@ -155,16 +177,16 @@ const AddUserPopup = ({
       <FooterContainer>
         <ButtonContainer>
           <Button
-            title="CANCEL"
+            title="Cancel"
             backgroundColor="#F6F7FB"
             color={theme.dark.secondaryText}
             btnStyle={btnStyle}
             onClick={handleCancelAddUser}
           />
           <Button
-            title="ADD USER"
-            backgroundColor={theme.dark.primary}
-            color={theme.dark.text}
+            title="Add User"
+            backgroundColor={theme[selectedTheme].primary}
+            color={theme[selectedTheme].background}
             btnStyle={btnStyle}
             onClick={handleSaveAddUser}
           />

@@ -23,7 +23,7 @@ const ArticleData = {
   link: 'https://indianexpress.com/article/lifestyle/fashion/gucci-alia-bhatt-global-ambassador-8609049/',
   icon: 'https://yt3.ggpht.com/ytc/AGIKgqM0ymt1FyptuNbIiKEa2h446IAI-GaddiF4qqgMVg=s88-c-k-c0x00ffffff-no-rj',
   image:
-    'https://images.indianexpress.com/2023/05/umar-khalid-and-lahiri-1200.jpg?resize=150,83',
+    'https://www.si.com/.image/ar_4:3%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MTk4NTkxOTAxNzY1NDc3ODI3/m298864.jpg',
   matches: ['GUCCI', 'abc'],
   ave: '~$1.5 M',
   sentiment: 'positive',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   HeaderText,
   MainWrp,
@@ -12,10 +12,32 @@ import {
 } from './index.sc';
 import ToggleSwitch from '../../../../../../components/toggle-switch';
 import { theme } from '../../../../../../constants/theme';
-import { Notifications } from '../../../../../../constants/mock';
+// import { Notifications } from '../../../../../../constants/mock';
+import { useSelector } from 'react-redux';
+import { axiosGet } from '../../../../../../service';
+import { useQuery } from '@tanstack/react-query';
 
 const NotificationsSettings = () => {
-  const [notifications, setNotifications] = useState(Notifications);
+  const getNotificationSettings = () => {
+    return axiosGet('/notification-settings', {}, {});
+  };
+
+  const { data: notificationSettings = [], isError } = useQuery({
+    queryKey: ['notification-settings'],
+    queryFn: getNotificationSettings,
+    refetchOnWindowFocus: false,
+  });
+  const allSettingsData = notificationSettings?.data?.data;
+
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    if (allSettingsData && !isError) {
+      setNotifications(allSettingsData);
+    } else {
+      setNotifications([]);
+    }
+  }, [allSettingsData, isError]);
 
   function handleClick(optionType, optionNumber) {
     const updatedNotifications = [...notifications];
@@ -25,6 +47,10 @@ const NotificationsSettings = () => {
 
     setNotifications(updatedNotifications);
   }
+
+  const selectedTheme = useSelector((store) => {
+    return store?.theme.theme || {};
+  });
 
   return (
     <MainWrp>
@@ -38,7 +64,7 @@ const NotificationsSettings = () => {
                 return (
                   <OptionWrp key={j}>
                     <ToggleSwitch
-                      accentColor={theme.dark.primary}
+                      accentColor={theme[selectedTheme].primary}
                       checked={option.selected}
                       onChange={() => handleClick(i, j)}
                     />

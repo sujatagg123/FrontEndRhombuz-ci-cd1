@@ -55,7 +55,7 @@ const NavSection = () => {
               <Plus
                 width="1.5rem"
                 height="1.5rem"
-                color={theme[selectedTheme].logoText}
+                color={theme[selectedTheme].primary}
               />
             </SaveCount>
           </TileHeader>

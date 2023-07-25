@@ -18,8 +18,10 @@ const Tabs = ({
   activeCardBGColor,
   inactiveCardBGColor,
   cardBorderRadius,
+  inactiveFontWeight,
+  currentTab,
 }) => {
-  const [activeTab, setActiveTab] = useState(items[0]?.id);
+  const [activeTab, setActiveTab] = useState(currentTab || items[0]?.id);
   const [showLeftShadow, setShowLeftShadow] = useState(false);
   const [showRightShadow, setShowRightShadow] = useState(false);
   const tabsRef = useRef(null);
@@ -99,11 +101,12 @@ const Tabs = ({
               activeColor={activeColor}
               inactiveColor={inactiveColor}
               theme={theme.light}
-              width={widthItem}
+              width={item?.width || widthItem}
               bottomBorderWidth={bottomBorderWidth}
               inactiveCardBGColor={inactiveCardBGColor}
               activeCardBGColor={activeCardBGColor}
               cardBorderRadius={cardBorderRadius}
+              inactiveFontWeight={inactiveFontWeight}
             >
               <Styles.Title> {item.title}</Styles.Title>
             </Styles.TabContainer>
@@ -123,8 +126,8 @@ const Tabs = ({
 Tabs.propTypes = {
   items: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]).isRequired,
+      id: PropTypes.number,
+      title: PropTypes.oneOfType([PropTypes.node, PropTypes.string]),
       content: PropTypes.oneOfType([PropTypes.node || PropTypes.string]),
       isDisabled: PropTypes.bool,
     })
@@ -142,6 +145,8 @@ Tabs.propTypes = {
   inactiveCardBGColor: PropTypes.string,
   activeCardBGColor: PropTypes.string,
   cardBorderRadius: PropTypes.string,
+  inactiveFontWeight: PropTypes.string,
+  currentTab: PropTypes.any,
 };
 
 Tabs.defaultProps = {

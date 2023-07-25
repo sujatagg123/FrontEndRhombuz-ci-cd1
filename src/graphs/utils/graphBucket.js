@@ -16,6 +16,7 @@ import { wordCloud } from '../WordCloud/wordCloud';
 import { radialPie } from '../RadialPieChart/radialPie';
 import { usMap } from '../USMap/usMap';
 import { worldMap } from '../WorldMapGraph/worldMap';
+import { butterflyRect } from '../Butterfly/butterflyRect';
 
 const graphBucket = {
   // Grid
@@ -36,6 +37,7 @@ const graphBucket = {
   treePath,
   nestedTreePath,
   heatRect,
+  butterflyRect,
 
   // Line
   linePath,

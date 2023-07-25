@@ -67,6 +67,10 @@ export const LabelWrapper = styled.div`
   font-weight: 600;
   font-size: 0.68rem;
   color: #585858;
+  width: 20%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 export const BarBoxwrpe = styled.div`
@@ -77,13 +81,15 @@ export const BarBoxwrpe = styled.div`
 
 export const Barwrpr = styled.div`
   display: flex;
+  justify-content: ${({ first, last }) =>
+    first ? 'flex-end' : last ? 'flex-start' : 'center'};
   width: calc(50% - 0.25rem);
 `;
 
 export const Bar = styled.div`
   width: ${(props) => props.width};
   height: 15px;
-  background: ${(props) => props.color};
+  background-color: ${(props) => props.color};
   transition: 0.2s ease-in-out;
 `;
 

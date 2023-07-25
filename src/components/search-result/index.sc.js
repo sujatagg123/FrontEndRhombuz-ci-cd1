@@ -5,7 +5,7 @@ const margin = 1.5;
 const gap = 0.5;
 export const dashboardWidth = 65 - margin;
 export const articleWdth = fullWidth - dashboardWidth - margin;
-export const buttonWidth = 1.25;
+export const buttonWidth = 1.37;
 
 export const TileArray = [
   {
@@ -119,8 +119,10 @@ export const Iconwpr = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 2.25rem;
-  width: 2.25rem;
+  ${({ width = '2.25rem', height = '2.25rem' }) => `
+  height: ${height};
+  width: ${width};
+  `}
   cursor: pointer;
   border-radius: 0.25rem;
 `;
@@ -128,19 +130,19 @@ export const Iconwpr = styled.div`
 export const BtnWrp = styled.div`
   position: fixed;
   overflow: hidden;
-  top: 15rem;
+  top: 8.5rem;
   box-shadow: 0px 5px 10px rgba(108, 73, 172, 0.1);
   left: ${({ activeScreen = '' }) =>
     activeScreen === 'dashboard'
       ? `${fullWidth - buttonWidth}vw`
       : activeScreen === 'article'
       ? `${-1.1 * buttonWidth}vw`
-      : `${dashboardWidth + gap / 2}vw`};
+      : `${dashboardWidth + gap - 1 / 2}vw`};
   background-color: #fff;
-  height: 2.5rem;
-  width: 2.5rem;
-  border-radius: 50%;
+  height: 1.875rem;
+  width: 2.75rem;
   border: 2px solid #675ef2;
+  border-radius: 0.75rem;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -193,15 +195,15 @@ export const UserTilesMainWrp = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  border-radius: 15px;
+  border-radius: 0rem 0rem 0.3125rem 0.3125rem;
   background: #fff;
-  padding: 1.188rem;
-  gap: 0.625rem;
+  padding: 1rem;
+  gap: 0.5rem;
 `;
 
 export const UberTextTitle = styled.p`
-  color: #000;
-  font-size: 0.813rem;
+  color: ${({ theme }) => theme.text};
+  font-size: 0.85rem;
   font-family: Inter;
   font-weight: 600;
   margin: 0;
@@ -243,7 +245,7 @@ export const SlotWrp = styled.div`
 `;
 export const FullSlot = styled.div`
   width: 100%;
-  height: 20rem;
+  height: 24rem;
   border-radius: 20px;
   padding: 1rem;
   background-color: #ffffff;
@@ -251,7 +253,7 @@ export const FullSlot = styled.div`
   z-index: ${({ selected }) => (selected ? 1 : null)};
 `;
 export const HalfSlot = styled.div`
-  height: 20rem;
+  height: 24rem;
   background-color: #ffffff;
   border-radius: 20px;
   padding: 1rem;
@@ -259,10 +261,23 @@ export const HalfSlot = styled.div`
   cursor: pointer;
   z-index: ${({ selected }) => (selected ? 1 : null)};
 `;
+
+export const Line = styled.div`
+  background: rgba(160, 167, 198, 0.6);
+  height: 2px;
+  margin-bottom: 0.25rem;
+  width: calc(100% + 2rem);
+  position: absolute;
+  bottom: 0;
+  left: -1rem;
+`;
+
 export const SlotDetailsMainWrp = styled.div`
   position: relative;
   height: 100%;
   width: 100%;
+  padding-bottom: 0.5rem;
+  box-sizing: border-box;
 `;
 export const SlotDetailsWrp = styled.div`
   position: relative;
@@ -285,7 +300,6 @@ export const SlotHeader = styled.div`
   height: 2rem;
   display: flex;
   justify-content: space-between;
-  align-items: center;
 `;
 
 export const SlotHeaderLeft = styled.div`
@@ -319,9 +333,9 @@ export const GraphTypeBtn = styled.div`
 `;
 
 export const SlotTitle = styled.div`
-  font-size: 1.15rem;
+  font-size: 0.9rem;
   font-weight: 600;
-  color: #000;
+  color: ${({ theme }) => theme.text};
   width: 95%;
   white-space: nowrap;
   overflow: hidden;
@@ -341,6 +355,7 @@ export const SlotBodyTabWrp = styled.div`
   height: 3rem;
   width: 100%;
 `;
+
 export const SlotBodyTabBody = styled.div`
   height: calc(100% - ${({ enableTabs }) => (enableTabs ? '3rem' : '0rem')});
   padding: ${({ enableTabs }) => (enableTabs ? '0rem' : '1rem 0rem')};
@@ -350,8 +365,8 @@ export const DropHeader = styled.div`
   display: flex;
   width: 100%;
   justify-content: space-between;
-  height: 3rem;
-  margin-bottom: 1rem;
+  /* height: 3rem; */
+  //margin-bottom: 1rem;
 `;
 export const TooltipWrapper = styled.div`
   padding: 0.7rem 0.875rem;
@@ -375,6 +390,19 @@ export const TooltipBodyLabel = styled.div`
   line-height: 0.5rem;
   color: #585858;
 `;
+
+export const TopInfowpr = styled.div`
+  height: 2rem;
+  width: 100%;
+  display: flex;
+  align-items: center;
+`;
+
+export const BottomDeswpr = styled.div`
+  width: 100%;
+  height: 1rem;
+`;
+
 export const TooltipBodyValue = styled.div`
   font-weight: 700;
   font-size: 0.85rem;
@@ -384,12 +412,13 @@ export const TooltipBodyValue = styled.div`
 
 export const Paginatewpr = styled.div`
   position: fixed;
-  bottom: 0;
+  bottom: 1rem;
   display: flex;
   ${(props) => (props.fullScreen ? 'left' : 'right')}: 1.5rem;
-  width: 31.625rem;
+  /* width: 31.625rem; */
   align-items: center;
   justify-content: space-between;
+  z-index: 3;
 `;
 // search
 export const SearchWrp = styled.div`
@@ -405,7 +434,7 @@ export const SearchWrp = styled.div`
   padding: 1.25rem;
   &.active {
     width: 100%;
-    height: 20.5rem;
+    height: 21rem;
     /* grid-template-rows: 1fr; */
   }
   .filter-wrapper {
@@ -617,8 +646,8 @@ export const WrapperContainer = styled.div`
   max-height: 0;
   overflow: hidden;
   &.active {
-    height: 15.32rem;
-    max-height: 15.32rem;
+    height: 15.35rem;
+    max-height: 15.35rem;
   }
 `;
 export const TabPopwpr = styled.div`
@@ -633,4 +662,37 @@ export const TabPopwpr = styled.div`
   z-index: 1;
   border-bottom: 1px solid rgb(204, 204, 204);
   background-color: ${({ theme }) => theme.background};
+`;
+export const FilterWrp = styled.div`
+  width: calc(100% - 22.06rem);
+  overflow-x: auto;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+`;
+
+export const BottomInfowpr = styled.div`
+  display: flex;
+  height: 2rem;
+  display: flex;
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: ${({ theme }) => theme.text};
+  align-items: center;
+`;
+
+export const IconBox = styled.div`
+  cursor: auto;
+  position: absolute;
+  width: 5.75rem;
+  display: flex;
+  z-index: 1;
+  justify-content: space-between;
+  align-items: start;
+  top: 0rem;
+  right: 0;
+  gap: 0.5rem;
 `;

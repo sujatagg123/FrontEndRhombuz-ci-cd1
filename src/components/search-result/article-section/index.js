@@ -16,13 +16,16 @@ import Articles from '../../articles';
 // import Pagination from '../../pagination';
 import { Titletabs } from '../../../constants/mock';
 import { useArticleData } from '../../../hooks/useSearch';
-import { useQueryClient } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 // import Spinner from '../../spinner';
 import { TitleBox } from '../../tabs/TabTitle';
-import { LinkSpan, TabButton } from './index.sc';
+import { LinkSpan, TabButton, ThemeTabs, Themetabtxt } from './index.sc';
 import { theme } from '../../../constants/theme';
 import XCirlcle from '../../../assets/icons/XCirlcle';
 import DownIcon from '../../../assets/icons/DownIcon';
+import { useSelector } from 'react-redux';
+import { axiosGet } from '../../../service';
+import { ArticleTheme } from '../../tabs/CardTitle';
 
 const ArticleSectionComponent = ({
   activeScreen,
@@ -43,6 +46,23 @@ const ArticleSectionComponent = ({
     // isFetching,
   } = useArticleData(page, type);
 
+  const { data: themeTabs, isLoading: themeTabLoading } = useQuery({
+    queryKey: ['themeTab'],
+    queryFn: () => axiosGet('/article-theme'),
+    refetchOnWindowFocus: false,
+  });
+
+  console.log('Theme tabs : ', themeTabs, ' ', themeTabLoading);
+
+  const themetabs = themeTabs?.data?.data?.map((item) => {
+    return { ...item, title: <ArticleTheme title={item.title} /> };
+  });
+
+  const handleTheme = (index, item) => {
+    console.log(index, ' ', item);
+    queryClient.invalidateQueries(['articles', 0, type]);
+  };
+
   const [titleTabs, setTitleTabs] = useState(data?.data?.tabs || Titletabs);
 
   const tabs = titleTabs?.map((ele, i) => ({
@@ -51,6 +71,10 @@ const ArticleSectionComponent = ({
     id: i,
   }));
   const [activeTab, setActiveTab] = useState(0);
+
+  const selectedTheme = useSelector((store) => {
+    return store?.theme.theme || {};
+  });
 
   const count = data?.data?.tabs?.filter((obj) => obj.value === type)[0].count;
 
@@ -122,6 +146,25 @@ const ArticleSectionComponent = ({
           end={(page + 1) * 50 < count ? (page + 1) * 50 : count}
           total={count}
         />
+        <ThemeTabs>
+          <Themetabtxt>Tags/Themes</Themetabtxt>
+          <Tabs
+            items={!themeTabs?.data?.data ? [{}] : themetabs}
+            variant="card"
+            activeColor={theme[selectedTheme].background}
+            inactiveColor={theme[selectedTheme].text}
+            onChange={handleTheme}
+            isContent={false}
+            gapitems="0.4rem"
+            bottomBorderWidth="0"
+            wraperBorderWidth="0"
+            activeCardBGColor={theme[selectedTheme].text}
+            inactiveCardBGColor={theme[selectedTheme].background}
+            cardBorderRadius=".75rem"
+            paddingWrapper="0.25rem 0 0"
+          />
+        </ThemeTabs>
+
         {Array.isArray(data?.data?.data) && !isLoading ? (
           <Articles
             articles={data?.data?.data}

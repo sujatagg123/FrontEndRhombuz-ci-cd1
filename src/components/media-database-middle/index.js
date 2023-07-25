@@ -1,14 +1,23 @@
 import React from 'react';
 import {
-  BtnWrp,
   ContentWrp,
+  CrossButtonWrp,
   JournalistText,
   MainWrp,
   MediaText,
+  RightSideWrp,
+  SearchBar,
+  TextWrp,
+  TopBarWrp,
 } from './index.sc';
-import ArrowLeftCircle from '../../assets/icons/ArrowLeftCircle';
 import Proptypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { theme } from '../../constants/theme';
+import { useSelector } from 'react-redux';
+import ArrowLeft from '../../assets/icons/ArrowLeft';
+import { Button } from '../button';
+import Plus from '../../assets/icons/Plus';
+import { SearchIcon } from '../../assets/icons/SearchIcon';
 
 const MediaDatabaseMiddle = ({ name }) => {
   const navigate = useNavigate();
@@ -17,15 +26,32 @@ const MediaDatabaseMiddle = ({ name }) => {
     navigate(-1);
   };
 
+  const selectedTheme = useSelector((store) => {
+    return store?.theme.theme || {};
+  });
+
   return (
     <MainWrp>
-      <ContentWrp onClick={handleClose}>
-        <BtnWrp>
-          <ArrowLeftCircle />
-        </BtnWrp>
-        <MediaText>Media Database</MediaText>
-        {name && <JournalistText>/ {name}</JournalistText>}
+      <ContentWrp>
+        <CrossButtonWrp onClick={handleClose}>
+          <ArrowLeft color={theme[selectedTheme].text} width="32" height="32" />
+        </CrossButtonWrp>
+        <TextWrp>
+          <MediaText>Media Database</MediaText>
+          {name && <JournalistText>/ {name}</JournalistText>}
+        </TextWrp>
       </ContentWrp>
+      <RightSideWrp>
+        <TopBarWrp>
+          <SearchBar placeholder="Search" />
+          <SearchIcon width="18" height="18" />
+        </TopBarWrp>
+        <Button
+          title="Create Dashboard"
+          backgroundColor={theme[selectedTheme].primary}
+          icon={<Plus />}
+        ></Button>
+      </RightSideWrp>
     </MainWrp>
   );
 };

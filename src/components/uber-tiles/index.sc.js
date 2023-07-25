@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const Tile = styled.div`
   box-sizing: border-box;
   background: #ffffff;
-  gap: 0.25rem;
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -15,8 +14,8 @@ export const Tile = styled.div`
 export const TileTitle = styled.div`
   margin: 0;
   padding: 0;
-  color: #555;
-  font-size: 0.813rem;
+  color: ${({ theme }) => theme.text};
+  font-size: 0.7rem;
   font-weight: 700;
   line-height: 1.125rem;
   letter-spacing: -0.016rem;
@@ -44,7 +43,6 @@ export const TileDataWrp = styled.div`
   letter-spacing: -0.028rem;
   gap: 0.2rem;
   width: 100%;
-  height: 65%;
 `;
 
 export const TileData = styled.p`
@@ -53,6 +51,7 @@ export const TileData = styled.p`
   font-weight: 600;
   line-height: 2rem;
   letter-spacing: -0.028rem;
+  margin: 0;
 `;
 
 export const Change = styled.div`
@@ -68,6 +67,7 @@ export const Change = styled.div`
   font-size: 0.813rem;
   line-height: 1rem;
   letter-spacing: -0.016rem;
+  margin: 0;
 `;
 
 export const Button = styled.div`

@@ -29,9 +29,10 @@ const handleSearchPost = (payload) => {
 //   );
 // };
 
-const getDashboardData = (searchId) => {
+const getDashboardData = (searchId, dashboardType) => {
   return axiosGet('/dashboard-data', {
     searchId,
+    dashboardType,
   });
 };
 
@@ -62,10 +63,10 @@ export const usePostSearchData = () => {
 //   });
 // };
 
-export const useDashboardData = (searchId) => {
+export const useDashboardData = (searchId, dashboardType) => {
   return useQuery({
-    queryKey: ['dashboard-data', searchId],
-    queryFn: () => getDashboardData(searchId),
+    queryKey: ['dashboard-data', searchId, dashboardType],
+    queryFn: () => getDashboardData(searchId, dashboardType),
     refetchOnWindowFocus: false,
   });
 };

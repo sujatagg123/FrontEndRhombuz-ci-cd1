@@ -77,3 +77,17 @@ export const TabButton = styled.div`
     margin-left: 0.25rem;
   }
 `;
+
+export const ThemeTabs = styled.div`
+  width: 100%;
+  padding: 0.4rem 1.5rem 0.7rem;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+`;
+
+export const Themetabtxt = styled.div`
+  color: ${({ theme }) => theme.secondaryText};
+  font-size: 0.75rem;
+  font-weight: 600;
+`;

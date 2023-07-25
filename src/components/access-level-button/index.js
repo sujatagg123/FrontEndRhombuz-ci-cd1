@@ -1,10 +1,11 @@
 import React from 'react';
 import Proptypes from 'prop-types';
 import { BtnText, BtnWrp } from './index.sc';
-import { UserCheck } from '../../assets/icons/UserCheck';
 import ChevronDown from '../../assets/icons/ChevronDown';
 import { theme } from '../../constants/theme';
 import { useSelector } from 'react-redux';
+import AdminIcon from '../../assets/icons/AdminIcon';
+import AnalystIcon from '../../assets/icons/AnalystIcon';
 
 const AccessLevelBtn = ({ accessLevel, handleClick, isActive }) => {
   const selectedTheme = useSelector((store) => {
@@ -17,12 +18,16 @@ const AccessLevelBtn = ({ accessLevel, handleClick, isActive }) => {
 
   return (
     <BtnWrp onClick={handleButtonClick} clicked={isActive}>
-      {accessLevel === 'admin' && (
-        <UserCheck
-          strokeColor={
-            isActive
-              ? theme[selectedTheme].settingsButtonBackground
-              : theme[selectedTheme].text
+      {accessLevel === 'admin' ? (
+        <AdminIcon
+          color={
+            isActive ? theme[selectedTheme].primary : theme[selectedTheme].text
+          }
+        />
+      ) : (
+        <AnalystIcon
+          color={
+            isActive ? theme[selectedTheme].primary : theme[selectedTheme].text
           }
         />
       )}
@@ -30,9 +35,7 @@ const AccessLevelBtn = ({ accessLevel, handleClick, isActive }) => {
       <ChevronDown
         size="17"
         color={
-          isActive
-            ? theme[selectedTheme].settingsButtonBackground
-            : theme[selectedTheme].text
+          isActive ? theme[selectedTheme].primary : theme[selectedTheme].text
         }
       />
     </BtnWrp>

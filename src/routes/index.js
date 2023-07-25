@@ -2,7 +2,7 @@ import React, { Suspense, lazy } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Error from '../components/error';
 // import { useSelector } from 'react-redux';
-import { contents } from '../constants/mock';
+// import { contents } from '../constants/mock';
 import LoginPage from '../pages/login';
 import RequireAuth from '../hooks/useAuth';
 import { roles } from '../constants';
@@ -12,16 +12,22 @@ import DashboardIcon from '../assets/icons/DashboardIcon';
 import NewslettersIcon from '../assets/icons/NewslettersIcon';
 import MediaDatabashIcon from '../assets/icons/MediaDatabashIcon';
 import SettingIcon from '../assets/icons/SettingIcon';
+// temp
+import TermsAndConditions from '../components/terms-and-conditions-privacy-policy';
+
+import ContactUs from '../components/contact-us';
 
 const LazyHome = lazy(() => import('../pages/home'));
 const LazyPageNotFound = lazy(() => import('../components/page-not-fount'));
 const LazySearchResults = lazy(() => import('../pages/search-results'));
-const LazyPopup = lazy(() => import('../components/map-popups/Demo'));
+// const LazyPopup = lazy(() => import('../components/map-popups/Demo'));
+const LazyPopup = lazy(() => import('../components/notification-popup/index'));
 const LazyMediaDatabase = lazy(() => import('../pages/media-database/index'));
 const LazyProfilePage = lazy(() => import('../pages/profile-page/index'));
 const LazySettings = lazy(() => import('../pages/settings'));
 const LazyNewsLetter = lazy(() => import('../pages/news-letter'));
 const LazyDashoboard = lazy(() => import('../pages/dashboard'));
+const LazyCreateDashboard = lazy(() => import('../pages/new-dashboard'));
 const LazyAllWidgets = lazy(() => import('../pages/all-widgets'));
 // const LazyPageNotFound = lazy(() => import());
 
@@ -132,11 +138,33 @@ export const navMenu = [
     icon: <SettingIcon />,
   },
   {
+    label: 'Settings',
+    path: 'settings/:tab1?',
+    element: (
+      <Suspense fallback={<div>Loading</div>}>
+        <LazySettings />
+      </Suspense>
+    ),
+    errorElement: <Error />,
+    icon: <SettingIcon />,
+  },
+  {
+    label: 'Settings',
+    path: 'settings/:tab1?/:tab2?',
+    element: (
+      <Suspense fallback={<div>Loading</div>}>
+        <LazySettings />
+      </Suspense>
+    ),
+    errorElement: <Error />,
+    icon: <SettingIcon />,
+  },
+  {
     label: 'Popup',
     path: 'popup',
     element: (
       <Suspense fallback={<div>Loading</div>}>
-        <LazyPopup recentSearchData={contents} />
+        <LazyPopup />
       </Suspense>
     ),
     errorElement: <Error />,
@@ -156,10 +184,38 @@ export const navMenu = [
   {
     label: 'Admin',
     path: 'admin',
-    element: <div>admin page</div>,
+    element: <></>,
     errorElement: <Error />,
     protected: true,
     role: ['admin'],
+  },
+  // temp
+  {
+    label: 'Terms and conditions',
+    path: 'terms-and-conditions',
+    element: <TermsAndConditions />,
+    errorElement: <Error />,
+    protected: false,
+    role: ['admin'],
+  },
+  {
+    label: 'Contact Us',
+    path: 'contact-us',
+    element: <ContactUs />,
+    errorElement: <Error />,
+    protected: false,
+    role: ['admin'],
+  },
+  {
+    label: 'Create Dashboard',
+    path: 'dashboard/:searchId/:dashboardType',
+    element: (
+      <Suspense fallback={<div>Loading</div>}>
+        <LazyCreateDashboard />
+      </Suspense>
+    ),
+    errorElement: <Error />,
+    protected: false,
   },
 ];
 

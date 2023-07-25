@@ -23,7 +23,14 @@ const ProfileTagsCard = ({ tags, socialLinks }) => {
       </TagsWrp>
       <SocialLinksWrp>
         {socialLinks.map((item, i) => {
-          return <SocialIcon key={i} image={item.image} />;
+          return (
+            <SocialIcon
+              key={i}
+              image={item.image}
+              href={item.link}
+              target="_blank"
+            />
+          );
         })}
       </SocialLinksWrp>
     </TagSecWrp>

@@ -1,30 +1,32 @@
-import React from 'react';
+import React, { memo } from 'react';
 import Proptypes from 'prop-types';
-import { LeftbarItem, LeftbarWrp } from './index.sc';
-import { leftbarItems } from '../utils';
+import { ItemWrp, LeftbarItem, LeftbarWrp } from './index.sc';
 
-const Leftbar = ({ selected, onLeftbarTabChange }) => {
+const Leftbar = ({ selected, leftbarItems, onLeftbarTabChange }) => {
   const handleSelectTab = (tab) => {
     onLeftbarTabChange && onLeftbarTabChange(tab);
   };
   return (
     <LeftbarWrp>
       {leftbarItems.map((item, i) => (
-        <LeftbarItem
+        <ItemWrp
           key={i}
           className={selected === item.value ? 'active' : ''}
           onClick={() => handleSelectTab(item.value)}
         >
-          {item.label}
-        </LeftbarItem>
+          <LeftbarItem className={selected === item.value ? 'active' : ''}>
+            {item.label}
+          </LeftbarItem>
+        </ItemWrp>
       ))}
     </LeftbarWrp>
   );
 };
 
-export default Leftbar;
+export default memo(Leftbar);
 
 Leftbar.propTypes = {
   selected: Proptypes.string,
+  leftbarItems: Proptypes.array,
   onLeftbarTabChange: Proptypes.func,
 };

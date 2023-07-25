@@ -47,7 +47,7 @@ const GridDashboard = () => {
       <DashbrdGraphconrwpr>
         <DashboardGraphheaderwpr>
           <HeaderLeft>
-            <Titletxtwpr>GUCCI</Titletxtwpr>
+            <Titletxtwpr>{dashboardDetails.title || 'GUCCI'}</Titletxtwpr>
             <Iconwpr>
               <RedirectIcon />
             </Iconwpr>

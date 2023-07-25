@@ -12,6 +12,7 @@ import {
 } from '../index.sc';
 import SlotDetails from '../slot-details';
 import UberTiles from '../../uber-tiles';
+import { overviewWidgets } from '../../../constants/widgets';
 
 const DashboardInnerContainer = ({
   dashboardDetails,
@@ -21,12 +22,17 @@ const DashboardInnerContainer = ({
   tileDetails,
   setArticleType,
 }) => {
-  const handleClick = (i) => {
+  const handleClick = (i, e) => {
+    e.stopPropagation();
     setArticleType([dashboardDetails[i].title, dashboardDetails[i].subTitle]);
     setSelected(i);
   };
   return (
-    <DashboardInnerSection id="download-content" selected={selected !== null}>
+    <DashboardInnerSection
+      id="download-content"
+      className="dash-scroll-container"
+      selected={selected !== null}
+    >
       <UserTilesMainWrp>
         <UberTextTitle>Results In Figure</UberTextTitle>
         <UberTilesWrp>
@@ -42,14 +48,21 @@ const DashboardInnerContainer = ({
         </UberTilesWrp>
       </UserTilesMainWrp>
       <SlotWrp>
-        {selected !== null && <BackDrop onClick={() => setSelected(null)} />}
+        {selected !== null && (
+          <BackDrop
+            onClick={(e) => {
+              e.stopPropagation();
+              setSelected(null);
+            }}
+          />
+        )}
         {dashboardDetails.map((widget, i) =>
-          widget.slotType === 'full' ? (
+          overviewWidgets[widget.component]?.slotType === 'full' ? (
             <FullSlot
               className="graph-widget"
               key={`widget-${i}`}
               selected={i === selected}
-              onClick={() => handleClick(i)}
+              onClick={(e) => handleClick(i, e)}
             >
               <SlotDetails widget={widget} loader={loader} selected={i === 0} />
             </FullSlot>
@@ -58,7 +71,7 @@ const DashboardInnerContainer = ({
               className="graph-widget"
               key={`widget-${i}`}
               selected={i === selected}
-              onClick={() => handleClick(i)}
+              onClick={(e) => handleClick(i, e)}
             >
               <SlotDetails widget={widget} loader={loader} />
             </HalfSlot>

@@ -21,7 +21,7 @@ export const ConnectedBtn = styled.div`
   align-items: flex-start;
   gap: 0.3125rem;
   border-radius: 0.38956rem;
-  background: var(--primary-primary-blue, #2e68ff);
+  background: #675ef2;
   cursor: pointer;
 `;
 

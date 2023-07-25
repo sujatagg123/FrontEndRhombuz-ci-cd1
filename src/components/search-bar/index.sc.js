@@ -19,18 +19,18 @@ export const InputSearch = styled.textarea`
   background-color: ${({ theme }) => theme.background};
   color: ${({ theme, isFocused }) =>
     isFocused ? theme.secondaryText : theme.text};
-  border: 1.006px solid #656b8a;
-  border-radius: 0.625rem;
+  border-radius: 0.3125rem;
+  border: 1.006px solid #c3c7d9;
   font-weight: 400;
   font-family: 'Inter', sans-serif;
-  font-size: 1rem;
+  font-size: 0.9375rem;
   line-height: 1.4rem;
   padding: 0.6rem 1rem;
   width: 100%; //calc(100% - 5rem)
   height: 100%;
   &::placeholder {
     font-weight: 400;
-    font-size: 1rem;
+    font-size: 0.9375rem;
     line-height: 1.4rem;
     color: #555555;
   }

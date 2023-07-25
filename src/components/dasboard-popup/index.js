@@ -11,6 +11,7 @@ const DashboardPopup = ({
   Cross = false,
   borderRadius = '1.25rem',
   isPopup = false,
+  width,
 }) => {
   const popupRef = useRef();
   const [newOpen, setNewOpen] = useState(false);
@@ -62,6 +63,7 @@ const DashboardPopup = ({
             borderRadius={borderRadius}
             padding={padding}
             open={newOpen}
+            width={width}
             ref={popupRef}
           >
             {popContent}
@@ -90,6 +92,7 @@ DashboardPopup.propTypes = {
   Cross: PropTypes.bool,
   borderRadius: PropTypes.string,
   isPopup: PropTypes.bool,
+  width: PropTypes.string,
 };
 
 export default DashboardPopup;

@@ -176,6 +176,7 @@ export const ContentsContainer = styled.div`
     display: none;
   }
   margin: 0.5rem 0;
+  padding-bottom: 0.5rem;
   background-color: ${({ theme }) => theme.secondaryBackground};
 `;
 

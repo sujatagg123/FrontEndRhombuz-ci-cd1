@@ -158,7 +158,7 @@ const TabSection = () => {
       <TabSectionWrp>
         <Tabwpr>
           {/* <TabIcon src={grid} /> */}
-          <ComponentIcon />
+          <ComponentIcon color={theme[selectedTheme].text} />
           {/* <TabBtnWrp>
             {[
               'Trending',
@@ -175,19 +175,19 @@ const TabSection = () => {
             items={tabs}
             variant="card"
             activeColor={theme[selectedTheme].background}
-            inactiveColor={theme[selectedTheme].text}
+            inactiveColor={theme[selectedTheme].secondaryText}
             onChange={handleTabs}
             isContent={false}
             gapitems="1rem"
             bottomBorderWidth="0"
             wraperBorderWidth="0"
             activeCardBGColor={theme[selectedTheme].primary}
-            inactiveCardBGColor="transparent"
+            inactiveCardBGColor={theme[selectedTheme].background}
             cardBorderRadius="5px"
             paddingWrapper="0 .625rem"
           />
           <TabAdd onClick={() => setNewCanvaspop(true)}>
-            <AddBlue />
+            <AddBlue color={theme[selectedTheme].secondaryText} />
           </TabAdd>
           <DashboardPopup
             open={newCanvaspop}
@@ -201,7 +201,7 @@ const TabSection = () => {
         </Tabwpr>
         <Custombtnwpr onClick={() => setShowCustom(true)}>
           {/* <Imgwpr height="1.5rem" width="1.5rem" src={Img.NpCustomis} alt="" /> */}
-          <CutomIcon />
+          <CutomIcon color={theme[selectedTheme].text} />
           <Custombtntxt>Customize</Custombtntxt>
         </Custombtnwpr>
         <DashboardPopup
@@ -220,7 +220,7 @@ const TabSection = () => {
       </TabSectionWrp>
       <BentoSectionWrp>
         {tab.id === 0 || tab.id === 1 ? (
-          <WorkSpot isWorkspace={tab.id === 1} workspotdata={tab.article} />
+          <WorkSpot isWorkspace={tab.id === 0} workspotdata={tab.article} />
         ) : tabSwithLoader ? (
           <>loading</>
         ) : (

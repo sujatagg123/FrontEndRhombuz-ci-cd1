@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Proptypes from 'prop-types';
 import {
   Bar,
@@ -6,65 +6,73 @@ import {
   BarContainer,
   Barwrpr,
   GraphBoxwrpr,
-  Infowrpr,
-  Justwpr,
   LabelWrapper,
-  Square,
-  Textwpr,
 } from './index.sc';
 
-const HorizontalMultiBar = ({ data, shoPoAndNe = false }) => {
-  const [width, setWidth] = useState(false);
-  const [show, setShow] = useState(false);
-  useEffect(() => {
-    setWidth(false);
-    setShow(false);
-    setTimeout(() => {
-      setShow(true);
-    }, 200);
-    setTimeout(() => {
-      setWidth(true);
-    }, 300);
-  }, []);
+const setData = (tempdata) => {
+  const inData = JSON.parse(JSON.stringify(tempdata));
+  const labels = inData?.labels
+    ? inData?.labels
+    : [{ label: 'label', value: 'value' }];
+  const data = inData.data;
+  const summary = inData.summary;
 
+  const filteredData = data;
+  const formattedData = [];
+
+  for (let i = 0; i < filteredData.length; i++) {
+    const items = [];
+    for (let j = 0; j < labels.length; j++) {
+      const value = filteredData[i][labels[j].value];
+      const item = {
+        data: filteredData[i],
+        color: filteredData[i].color || labels[j].color,
+        index: j,
+        labelIndex: i,
+        labelText: filteredData[i].label,
+        label: labels[j].label,
+        value,
+      };
+      items.push(item);
+    }
+    formattedData.push(items);
+  }
+  return { formattedData, summary, labels };
+};
+
+const HorizontalMultiBar = ({ data, config }) => {
+  const preparedData = setData(data);
+  const { formattedData } = preparedData;
   return (
     <GraphBoxwrpr>
-      {data.map((theme, i) => (
+      {formattedData.map((ele, i) => (
         <BarContainer key={i}>
-          <LabelWrapper>{theme.label}</LabelWrapper>
+          <LabelWrapper>{ele[0]?.labelText || ''}</LabelWrapper>
           <BarBoxwrpe>
-            <Barwrpr style={{ justifyContent: 'flex-end' }}>
-              {show && (
-                <Bar width={width ? theme.negative : '00'} color="#ED3F47" />
-              )}
-            </Barwrpr>
-            <Barwrpr>
-              {show && (
-                <Bar width={width ? theme.positive : '0'} color="#00CE75" />
-              )}
-            </Barwrpr>
+            {ele.map((item, j) => (
+              <Barwrpr
+                key={`${i}${j}`}
+                first={j === 0}
+                last={j === ele.length - 1}
+              >
+                <Bar
+                  width={`${
+                    item.value > 100 ? 100 : item.value < 0 ? 0 : item.value
+                  }%`}
+                  color={item.color}
+                />
+              </Barwrpr>
+            ))}
           </BarBoxwrpe>
         </BarContainer>
       ))}
-      {shoPoAndNe && (
-        <Infowrpr>
-          <Justwpr>
-            <Square background="#00CE75" />
-            <Textwpr>Positive</Textwpr>
-          </Justwpr>
-          <Justwpr>
-            <Square background="#ED3F47" />
-            <Textwpr>Negative</Textwpr>
-          </Justwpr>
-        </Infowrpr>
-      )}
     </GraphBoxwrpr>
   );
 };
 
 HorizontalMultiBar.propTypes = {
-  data: Proptypes.array,
-  shoPoAndNe: Proptypes.bool,
+  data: Proptypes.object,
+  config: Proptypes.object,
 };
 
 export default HorizontalMultiBar;

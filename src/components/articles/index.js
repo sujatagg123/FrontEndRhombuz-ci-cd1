@@ -84,14 +84,22 @@
 // };
 // export default ArticleComponentViewer;
 
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import styled, { css } from 'styled-components';
 import { Link } from 'react-router-dom';
 import Bookmark from '../../assets/icons/Bookmark';
 import Comment from '../../assets/icons/Comment';
-import { bottomDetails } from '../../constants';
+import { Bottomkeys, bottomDetails } from '../../constants';
 import SentimentComponent from '../sentiment';
+import TagIcon from '../../assets/icons/TagIcon';
+import ThemeIcon from '../../assets/icons/ThemeIcon';
+import { useSelector } from 'react-redux';
+import { theme } from '../../constants/theme';
+import GrowthIcon from '../../assets/icons/GrowthIcon';
+import CommentBox from './hover-poovers/CommentBox';
+import Popover from './hover-poovers';
+import TagBox from './hover-poovers/TagBox';
 
 const ArticlesWrp = styled.div`
   padding: 1rem 1.5rem 0rem 1.5rem;
@@ -140,18 +148,30 @@ const ArticleWrp = styled.div`
   display: flex;
   gap: 1rem;
   position: relative;
-  width: calc(100% - 2rem);
+  width: 100%;
   ${({ articleView }) =>
     articleView &&
     css`
       flex-direction: row-reverse;
     `}
 `;
+
+const ArticlewrpBox = styled.div`
+  width: calc(100% - 2rem);
+`;
+
 const ArticleWrpL = styled.div`
   width: 25%;
 `;
 const ArticleWrpR = styled.div`
   width: 75%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
+
+const ArticlewprZ = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -167,10 +187,11 @@ const ArticleTitle = styled.div`
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: ${({ theme }) => theme.secondaryText};
 `;
 const ArticleBody = styled.div`
   font-size: 0.75rem;
-  color: #5c5e60;
+  color: ${({ theme }) => theme.closeButton};
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -179,25 +200,37 @@ const ArticleBody = styled.div`
 `;
 const ArticleLinkWrp = styled.div`
   display: flex;
-  overflow: hidden;
   align-items: center;
-  gap: 1rem;
+  gap: 0.3rem;
+  padding: 0.4rem;
+`;
+
+const Articlekeytxt = styled.div`
+  text-decoration: none;
+  color: ${({ theme }) => theme.closeButton};
+  font-weight: 600;
+  font-size: 0.75rem;
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 5rem;
 `;
 
 const ArticleIcon = styled.img`
-  width: 1.5rem;
-  height: 1.5rem;
+  width: 0.9rem;
+  height: 0.9rem;
 `;
 const ArticleLink = styled(Link)`
   text-decoration: none;
-  color: #5c5e60;
+  color: ${({ theme }) => theme.closeButton};
   font-weight: 600;
-  font-size: 0.6rem;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  font-size: 0.75rem;
+  display: inline-block;
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  width: 5rem;
 `;
 const ArticleBottomWrp = styled.div`
   opacity: ${({ articleView }) => (articleView ? '1' : '0')};
@@ -219,6 +252,7 @@ const ArticleBottomWrp = styled.div`
   flex-direction: column;
   gap: 0.5rem;
   transition: all 400ms ease-in-out;
+  position: relative;
 `;
 const ArticleTextDetailsWrp = styled.div`
   display: flex;
@@ -238,6 +272,7 @@ const ArticleActionDetailsWrp = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 0.4rem;
 `;
 const ArticleTextWrp = styled.div`
   display: flex;
@@ -257,6 +292,7 @@ const ArticleTextValue = styled.div`
   font-weight: 600;
 `;
 const ArticleIconWrp = styled.div`
+  cursor: pointer;
   svg {
     width: 100%;
   }
@@ -264,7 +300,52 @@ const ArticleIconWrp = styled.div`
 // const ArticleWrpR = styled.div``;
 // const ArticleWrpR = styled.div``;
 
+const IconsPop = ({ Icon, PopContent, data }) => {
+  const [show, setShow] = useState(false);
+  const iconPopRef = useRef(null);
+  const selectedTheme = useSelector((store) => {
+    return store?.theme.theme || {};
+  });
+
+  const handleClickOutside = (event) => {
+    if (iconPopRef.current && !iconPopRef.current.contains(event.target)) {
+      setShow(false);
+      document.removeEventListener('click', handleClickOutside);
+    }
+  };
+  document.addEventListener('click', handleClickOutside);
+  const handleShow = (e) => {
+    e.stopPropagation();
+    setShow(!show);
+  };
+
+  return (
+    <>
+      <ArticleIconWrp onClick={handleShow} ref={iconPopRef}>
+        {show && (
+          <Popover
+            InnerChild={PopContent}
+            data={data || {}}
+            setShow={setShow}
+          />
+        )}
+        <Icon color={theme[selectedTheme].text} />
+      </ArticleIconWrp>
+    </>
+  );
+};
+
+IconsPop.propTypes = {
+  Icon: PropTypes.any,
+  PopContent: PropTypes.any,
+  data: PropTypes.any,
+};
+
 const Articles = ({ articles, articleView }) => {
+  const selectedTheme = useSelector((store) => {
+    return store?.theme.theme || {};
+  });
+
   return (
     <ArticlesWrp id="article-content" articleView={articleView}>
       {articles.map((ele, i) => (
@@ -274,26 +355,53 @@ const Articles = ({ articles, articleView }) => {
             className="article-bottom"
           >
             <ArticleActionDetailsWrp>
+              {false && (
+                <ArticleIconWrp>
+                  <Bookmark color={theme[selectedTheme].text} />
+                </ArticleIconWrp>
+              )}
+              <IconsPop Icon={Comment} PopContent={CommentBox} data="dfsa" />
               <ArticleIconWrp>
-                <Bookmark />
+                <ThemeIcon color={theme[selectedTheme].text} />
               </ArticleIconWrp>
+              <IconsPop Icon={TagIcon} PopContent={TagBox} data={[{}]} />
               <ArticleIconWrp>
-                <Comment />
+                <GrowthIcon color={theme[selectedTheme].text} />
               </ArticleIconWrp>
             </ArticleActionDetailsWrp>
           </ArticleBottomWrp>
-          <ArticleWrp articleView={articleView} key={`${ele.title}-i`}>
-            <ArticleWrpL>
-              <ArticleImg src={ele.image} />
-            </ArticleWrpL>
-            <ArticleWrpR>
-              <ArticleTitle>{ele.title}</ArticleTitle>
-              <ArticleBody>{ele.content}</ArticleBody>
+          <ArticlewrpBox>
+            <ArticleWrp articleView={articleView} key={`${ele.title}-i`}>
+              <ArticleWrpL>
+                <ArticleImg src={ele.image} />
+              </ArticleWrpL>
+              <ArticleWrpR>
+                <ArticleTitle>{ele.title}</ArticleTitle>
+                <ArticleBody>{ele.content}</ArticleBody>
+              </ArticleWrpR>
+            </ArticleWrp>
+            <ArticlewprZ>
               <ArticleLinkWrp>
-                <ArticleIcon src={ele.icon} />
-                <ArticleLink to={ele.link} target="_blank" rel={ele.title}>
-                  {ele.link}
-                </ArticleLink>
+                {Bottomkeys.map((item, i) => (
+                  <>
+                    {item.value === 'link' ? (
+                      <>
+                        <ArticleIcon src={ele.icon} />
+                        <ArticleLink
+                          to={ele[item.value]}
+                          target="_blank"
+                          rel={ele.title}
+                        >
+                          {ele.link}
+                        </ArticleLink>
+                      </>
+                    ) : (
+                      <Articlekeytxt>
+                        | {ele[item.value] || item.label}
+                      </Articlekeytxt>
+                    )}
+                  </>
+                ))}
               </ArticleLinkWrp>
               <ArticleTextDetailsWrp articleView={articleView}>
                 {bottomDetails.map((item, j) => (
@@ -303,18 +411,23 @@ const Articles = ({ articles, articleView }) => {
                   >
                     <ArticleTextLabel>{item.label} :</ArticleTextLabel>
                     <ArticleTextValue>
-                      {item.value === 'matches'
-                        ? item.value === 'matches' && articleView
-                          ? ele[item.value].join(', ')
-                          : ele[item.value][0] || ''
-                        : ele[item.value]}
+                      {item.value === 'matches' ? (
+                        item.value === 'matches' && articleView ? (
+                          ele[item.value].join(', ')
+                        ) : (
+                          ele[item.value][0] || ''
+                        )
+                      ) : item.value === 'sentiment' ? (
+                        <SentimentComponent sentiment={ele[item.value]} />
+                      ) : (
+                        ele[item.value]
+                      )}
                     </ArticleTextValue>
                   </ArticleTextWrp>
                 ))}
-                <SentimentComponent sentiment={'positive'} />
               </ArticleTextDetailsWrp>
-            </ArticleWrpR>
-          </ArticleWrp>
+            </ArticlewprZ>
+          </ArticlewrpBox>
         </ArticleMainWrp>
       ))}
     </ArticlesWrp>

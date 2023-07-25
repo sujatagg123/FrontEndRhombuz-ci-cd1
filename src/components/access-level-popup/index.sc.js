@@ -18,8 +18,8 @@ export const BtnWrp = styled.div`
 `;
 export const PopupCloseBtnWrp = styled.div`
   position: absolute;
-  top: 10px;
-  right: 10px;
+  top: 1.8rem;
+  right: 1.5rem;
   cursor: pointer;
   height: 1.5rem;
   width: 1.5rem;
@@ -34,11 +34,11 @@ export const PopUpWrp = styled.div`
   height: 100vh;
   width: 26.75rem;
   flex-shrink: 0;
-  border-radius: 0.9375rem;
+  border-radius: 0.9375rem 0 0 0.935rem;
   background: #fff;
   box-shadow: 0px 8px 8px 0px rgba(153, 153, 153, 0.4);
   position: absolute;
-  right: 0.8125rem;
+  right: 0rem;
   transition: 0.3s ease-in-out;
   z-index: 1000;
   transform: ${(props) =>
@@ -52,9 +52,7 @@ export const TextArea = styled.div`
   align-items: flex-start;
   justify-content: center;
   gap: 0.59rem;
-  padding-left: 1.61rem;
-  padding-top: 2.12rem;
-  padding-bottom: 2rem;
+  padding: 2rem 1.61rem;
 `;
 
 export const HeadingText = styled.h3`
@@ -81,8 +79,7 @@ export const Subtext = styled.p`
 
 export const TableArea = styled.div`
   width: 100%;
-  padding-right: 1.63rem;
-  padding-left: 1.37rem;
+  padding: 0 1.61rem;
 `;
 
 export const TableWrapper = styled.table`

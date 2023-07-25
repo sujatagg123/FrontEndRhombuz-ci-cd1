@@ -6,9 +6,13 @@ export const BtnWrp = styled.div`
   padding: 0.375rem 0.625rem;
   align-items: center;
   gap: 0.3125rem;
-  border-radius: 0.125rem;
+  border-radius: 0.3125rem;
   background: ${(props) =>
-    props.clicked ? theme.light.text : theme.light.settingsButtonBackground};
+    props.clicked
+      ? theme.light.settingsButtonBackground
+      : theme.light.background};
+  border: 1px solid
+    ${(props) => (props.clicked ? theme.light.primary : theme.light.text)};
 
   cursor: pointer;
   width: 6.6875rem;
@@ -16,8 +20,7 @@ export const BtnWrp = styled.div`
 `;
 
 export const BtnText = styled.p`
-  color: ${(props) =>
-    props.clicked ? theme.light.settingsButtonBackground : theme.light.text};
+  color: ${(props) => (props.clicked ? theme.light.primary : theme.light.text)};
   font-size: 0.8125rem;
   font-style: normal;
   font-weight: 700;

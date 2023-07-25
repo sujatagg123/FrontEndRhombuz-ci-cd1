@@ -10,18 +10,20 @@ export const TableContainer = styled.div`
   }
   -ms-overflow-style: none;
   scrollbar-width: none;
+  margin-bottom: 0.5rem;
 `;
 
 export const Table = styled.table`
   width: 100%;
   height: 100%;
   border-collapse: collapse;
-  border: 1px solid rgba(195, 199, 217, 0.5);
 `;
 export const TableHead = styled.thead`
-  background: #f3f4f8;
-  box-shadow: 0px -1px 0px 0px rgba(195, 199, 217, 0.5) inset;
-  height: 1.875rem;
+  /* border-top: 1px solid #eaecf0;
+  border-bottom: 1px solid #eaecf0; */
+
+  background: #f9fafb;
+  height: 2.75rem;
   position: sticky;
   top: 0;
   z-index: 300;
@@ -48,7 +50,7 @@ export const TableHeaderWrp = styled.div`
 export const TableHeader = styled.th`
   padding: 0 0.625rem;
   text-align: left;
-  color: #5c5e60;
+  color: ${({ theme }) => theme.tableHeaderColor};
   font-size: 0.75rem;
   font-weight: 500;
   line-height: 1rem;
@@ -98,7 +100,7 @@ export const CheckBox = styled.input.attrs({ type: 'checkbox' })`
   &:checked {
     width: 1rem;
     height: 1rem;
-    accent-color: #425df8;
+    accent-color: ${({ theme }) => theme.primary};
     border-radius: 3px;
     transition: all 400ms ease;
   }
@@ -107,16 +109,25 @@ export const ButtonCon = styled.div`
   width: 4rem;
   padding: 0.375rem 0.8rem;
   border-radius: 2px;
-  background-color: ${({ bgColor }) => bgColor};
+  background-color: ${({ status, theme }) =>
+    status === 'active' ? theme.activeStatusBtnBg : theme.inActiveStatusBtnBg};
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
+
 export const ButtonText = styled.div`
-  color: #ffffff;
   font-size: 0.8rem;
   font-weight: 700;
   line-height: 1.125rem;
   letter-spacing: -0.26px;
   text-transform: capitalize;
+  color: ${({ status, theme }) =>
+    status === 'active'
+      ? theme.activeStatusBtnText
+      : theme.inActiveStatusBtnText};
 `;
+
 export const FlexDiv = styled.div`
   display: flex;
   align-items: center;
@@ -140,14 +151,14 @@ export const TextContentWrp = styled.div`
   align-items: flex-start;
 `;
 export const ValueTitle = styled.span`
-  color: ${({ theme }) => theme.secondaryText};
+  color: ${({ theme }) => theme.tabInactive};
   font-size: 0.85rem;
   font-weight: 700;
   line-height: 1.125rem;
   letter-spacing: -0.28px;
 `;
 export const ValueSubTitle = styled.span`
-  color: #656b8a;
+  color: ${({ theme }) => theme.text};
   font-size: 0.75rem;
   font-weight: 400;
   line-height: 1.125rem;
@@ -183,7 +194,7 @@ export const Loadbtn = styled.div`
   text-transform: uppercase;
   color: ${({ theme }) => theme.secondaryText};
   padding: 0.5rem 0.75rem;
-  margin: 1rem 0 0.5rem;
+  margin: 0 0 0.25rem;
   border: 1px solid ${({ theme }) => theme.background};
   background-color: ${({ theme }) => theme.secondaryBackground};
   cursor: pointer;

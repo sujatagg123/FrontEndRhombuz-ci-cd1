@@ -57,6 +57,7 @@ export const FooterBoxwpr = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 0 1.85rem 1rem;
+  margin-top: ${({ mt }) => `${mt}rem`};
 `;
 
 export const LeftfootBoxwpr = styled.div`
@@ -96,6 +97,12 @@ export const ButtonBoxwpr = styled.button`
   font-size: 0.81rem;
   color: ${({ fontColor }) => fontColor};
   cursor: pointer;
+  &.btn {
+    border-radius: 0.5rem;
+  }
+  &.cancel {
+    border: 1px solid #535770;
+  }
 `;
 
 export const Iconwpr = styled.div`

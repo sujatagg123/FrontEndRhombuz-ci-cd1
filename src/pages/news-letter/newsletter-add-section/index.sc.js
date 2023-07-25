@@ -6,7 +6,7 @@ export const NewsLetterWrp = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 1.3rem;
+  margin-top: 1.25rem;
 `;
 
 export const NewsLetterRow = styled.div`

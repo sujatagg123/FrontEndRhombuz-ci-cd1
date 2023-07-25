@@ -1,12 +1,17 @@
 import React from 'react';
 import { SentimentContainer } from './index.sc';
 import PropTypes from 'prop-types';
+import SmileIcon from '../../assets/icons/SmileIcon';
 
 const SentimentComponent = ({ sentiment }) => {
   return (
-    <SentimentContainer>
+    <SentimentContainer positive={sentiment === 'positive'}>
       {/* <span>{icon}</span> */}
-      <span>{sentiment}</span>
+      {sentiment === 'positive' && (
+        <>
+          {<SmileIcon />} <span>+ve</span>
+        </>
+      )}
     </SentimentContainer>
   );
 };

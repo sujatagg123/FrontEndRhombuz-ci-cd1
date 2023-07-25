@@ -8,6 +8,7 @@ import {
   GuidedTextArea,
   HeaderLeftCon,
   IconText,
+  RecentSearchWrp,
   SaveCount,
   // IconWrapper,
   SavedSearchContainer,
@@ -31,7 +32,7 @@ import DashboardPopup from '../dasboard-popup';
 import SearchPopup from '../search-popup/SearchPopContent';
 import { theme } from '../../constants/theme';
 import RecentSearch from './RecentSearch';
-import SearchIcon from './assets/icons/SearchIcon';
+// import SearchIcon from './assets/icons/SearchIcon';
 // import { useMutation, useQueryClient } from '@tanstack/react-query';
 // import { axiosPutRequest } from '../../service';
 // import { useParams } from 'react-router';
@@ -186,12 +187,12 @@ const SearchComponent = ({
           <>
             <SectionHeader>
               <HeaderLeftCon>
-                <SearchIcon
+                {/* <SearchIcon
                   width="18"
                   height="18"
                   strokeColor={theme[selectedTheme].text}
-                />
-                <SectionTitle>Search</SectionTitle>
+                /> */}
+                <SectionTitle>New Search</SectionTitle>
                 <ToggleContainer>
                   <ToggleSwitch
                     accentColor={theme[selectedTheme].primary}
@@ -216,7 +217,7 @@ const SearchComponent = ({
         )}
         {guidedSection ? (
           <GuidedSearchSection>
-            <TextAreaCon className="border-right br-left">
+            <TextAreaCon className="br-left">
               <GuidedTextArea
                 id="all"
                 name="all"
@@ -229,7 +230,7 @@ const SearchComponent = ({
                 Include <strong>all of these</strong>
               </TextAreaLabel>
             </TextAreaCon>
-            <TextAreaCon className="border-right">
+            <TextAreaCon>
               <GuidedTextArea
                 id="none"
                 name="none"
@@ -241,7 +242,7 @@ const SearchComponent = ({
                 Include <strong>none of these</strong>
               </TextAreaLabel>
             </TextAreaCon>
-            <TextAreaCon className="br-right">
+            <TextAreaCon className="border-right br-right">
               <GuidedTextArea
                 id="any"
                 name="any"
@@ -265,37 +266,44 @@ const SearchComponent = ({
             />
           </SearchBarWrapper>
         )}
-        {isSearchResult && isEditMode && (
-          <ToggleContainer>
-            <ToggleSwitch
-              accentColor={theme[selectedTheme].primary}
-              checked={guidedSection}
-              onChange={handleGuidedToggle}
-            />
-            <ToggleLabel>Guided Search</ToggleLabel>
-          </ToggleContainer>
-        )}
-        {!isSearchResult && <RecentSearch results={recentSearches} />}
-        {isFocused && (
-          <ExpandedContainer className={isFocused ? 'expanded' : ''}>
+        <ExpandedContainer className={isFocused ? 'expanded' : ''}>
+          {!isSearchResult && (
+            <RecentSearchWrp className={isFocused ? 'expanded' : ''}>
+              <RecentSearch results={recentSearches} />
+            </RecentSearchWrp>
+          )}
+          {isSearchResult && isEditMode && (
+            <ToggleContainer>
+              <ToggleSwitch
+                accentColor={theme[selectedTheme].primary}
+                checked={guidedSection}
+                onChange={handleGuidedToggle}
+              />
+              <ToggleLabel>Guided Search</ToggleLabel>
+            </ToggleContainer>
+          )}
+          {isFocused && (
             <SearchesContainer>
               <Button
                 title="Cancel"
-                backgroundColor={theme[selectedTheme].secondaryBackground}
+                backgroundColor={theme[selectedTheme].background}
                 color={theme.dark.secondaryText}
                 onClick={(e) => {
                   handleCancelSearch && handleCancelSearch();
                 }}
+                btnStyle={{ width: '6.18rem', borderRadius: '0.5rem' }}
+                border="1px solid #535770"
               />
               <Button
-                title={isEditMode ? 'Update Search' : 'Search'}
+                title={isEditMode ? 'Update' : 'Search'}
                 backgroundColor={theme[selectedTheme].primary}
                 color={theme.dark.text}
                 onClick={handleSearch}
+                btnStyle={{ width: '6.18rem', borderRadius: '0.5rem' }}
               />
             </SearchesContainer>
-          </ExpandedContainer>
-        )}
+          )}
+        </ExpandedContainer>
       </SearchComponentWrapper>
 
       <DashboardPopup

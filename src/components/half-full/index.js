@@ -67,13 +67,7 @@ const HalfFull = ({ data, onClick }) => {
   };
 
   return (
-    <Containerwpr
-      imgURL={
-        data.imgURL ||
-        'https://www.tennisworldusa.org/imgb/133585/wimbledon-icon-roger-federer-will-return-to-the-all-england-club-this-year.webp'
-      }
-      onClick={onClick}
-    >
+    <Containerwpr imgURL={data.imgURL} onClick={onClick}>
       <Upperwpr>
         <Upperleft>
           {/* {data.full && <FulLabelwpr>{data.labelfull}</FulLabelwpr>}
@@ -99,7 +93,7 @@ const HalfFull = ({ data, onClick }) => {
         <Descwpr>{data.description}</Descwpr>
         <Infowpr>
           {data.publisher} | {data.author} | {data.date} | {data.place} |{' '}
-          {data.matchingKeywords} | {data.newstype}{' '}
+          {data.newstype}{' '}
         </Infowpr>
       </Bottomwpr>
     </Containerwpr>

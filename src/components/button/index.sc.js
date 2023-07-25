@@ -37,12 +37,9 @@ export const ButtonComp = styled.button`
       : type === 'circle'
       ? theme.main
       : backgroundColor}; // set background  color
-  border: ${({ disable, borderColor, type, disableStyle }) =>
-    disable
-      ? disableStyle?.border
-      : type === 'secondary'
-      ? `1px solid ${borderColor}`
-      : 'unset'}; // set border
+  border: 1px solid
+    ${({ disable, borderColor, type, disableStyle, border }) =>
+      disable ? disableStyle?.border : border || 'unset'}; // set border
 
   /* &:hover {
     background: ${({

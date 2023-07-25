@@ -20,6 +20,7 @@ import AccessLevelArrow from '../../assets/icons/AccessLevelArrow';
 import Avatar from '../avatar';
 import { Button } from '../button';
 import { theme } from '../../constants/theme';
+import { useSelector } from 'react-redux';
 
 const accessLevels = [
   { label: 'Admin', value: 'admin', level: 1 },
@@ -31,6 +32,10 @@ const UserAccessLevelPopup = ({ data, setOpenedIndex, handlePopupClick }) => {
   function handleSubmit() {
     setOpenedIndex(-1);
   }
+
+  const selectedTheme = useSelector((store) => {
+    return store?.theme.theme || {};
+  });
 
   function changeLevel(currentAccessLevel) {
     const type = accessLevels.find(
@@ -83,11 +88,12 @@ const UserAccessLevelPopup = ({ data, setOpenedIndex, handlePopupClick }) => {
             backgroundColor={'#F6F7FB'}
             color={'#000000'}
             onClick={() => setOpenedIndex(-1)}
+            // btnStyle={addBtnStyle}
           />
           {data.access_level !== 'admin' && (
             <Button
               title={'Submit'}
-              backgroundColor={theme.dark.primary}
+              backgroundColor={theme[selectedTheme].primary}
               onClick={handleSubmit}
             />
           )}

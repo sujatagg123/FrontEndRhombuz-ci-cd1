@@ -109,31 +109,31 @@ export const Types = [
 export const Days = [
   {
     id: 0,
-    label: 'Mon',
+    label: 'Monday',
   },
   {
     id: 1,
-    label: 'Tue',
+    label: 'Tuesday',
   },
   {
     id: 2,
-    label: 'Wed',
+    label: 'Wednesday',
   },
   {
     id: 3,
-    label: 'Thu',
+    label: 'Thursday',
   },
   {
     id: 4,
-    label: 'Fri',
+    label: 'Friday',
   },
   {
     id: 5,
-    label: 'Sat',
+    label: 'Saturday',
   },
   {
     id: 6,
-    label: 'Sun',
+    label: 'Sunday',
   },
 ];
 

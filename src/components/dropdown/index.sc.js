@@ -25,7 +25,7 @@ export const DropdownContainer = styled.div`
   height: 2.125rem;
   box-sizing: border-box;
   border-radius: 0.3125rem;
-  border: 1px solid var(--grey-border-drak, #c3c7d9);
+  border: 1px solid #dedede;
   padding: 0.4375rem 0.5rem;
 `;
 
@@ -93,18 +93,18 @@ export const OptionTitle = styled.span`
   line-height: 1rem;
 `;
 export const Selection = styled.div`
-  width: 1.75rem;
-  height: 1.25rem;
+  width: 1.5rem;
+  height: 1.1875rem;
   display: flex;
   align-items: center;
   justify-content: center;
   /* padding: 4px 9px; */
   background: ${({ theme }) => theme.primary};
-  font-weight: 500;
-  font-size: 0.813rem;
-  line-height: 1rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  line-height: 0.6875rem;
   color: ${({ theme }) => theme.logoText};
-  border-radius: 0.5rem;
+  border-radius: 0.3125rem;
 `;
 export const CountIconWrapper = styled.div`
   display: flex;

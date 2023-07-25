@@ -26,3 +26,28 @@ export const leftbarItems = [
     component: <Themes />,
   },
 ];
+
+const createLeftbarItems = (handlePopupClick) => [
+  {
+    label: 'My Account',
+    value: 'myaccount',
+    component: <MyAccount handlePopupClick={handlePopupClick} />,
+  },
+  {
+    label: 'Notifications',
+    value: 'notifications',
+    component: <NotificationComponent />,
+  },
+  {
+    label: 'Tags',
+    value: 'tags',
+    component: <Tags />,
+  },
+  {
+    label: 'Themes',
+    value: 'themes',
+    component: <Themes />,
+  },
+];
+
+export default createLeftbarItems;

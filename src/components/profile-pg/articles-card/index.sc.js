@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 
 export const ArticlesWrp = styled.div`
-  padding: 1.56rem 1.38rem;
-  background-color: #fff;
-  border-radius: 0.625rem;
   display: flex;
-  gap: 3.12rem;
-  flex-wrap: wrap;
+  padding: 1.5625rem 2rem;
+  align-items: center;
+  justify-content: space-between;
+  align-self: stretch;
+  background-color: #ffffff;
+  border-radius: 0.3125rem;
+  box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.08);
 `;
 
 export const Content = styled.div`
@@ -19,23 +21,24 @@ export const Content = styled.div`
 `;
 
 export const ArticleType = styled.p`
-  color: #555;
-  text-align: center;
-  font-size: 0.75rem;
+  color: var(--grey-grey-1, #656b8a);
+
+  font-size: 0.8125rem;
   font-style: normal;
   font-weight: 500;
-  line-height: 1rem;
+  line-height: 1.25rem; /* 153.846% */
+  letter-spacing: -0.01625rem;
   margin: 0;
   padding: 0;
 `;
 
 export const ArticleNumber = styled.p`
   color: #000;
-  text-align: center;
-  font-size: 1rem;
+  font-size: 1.0625rem;
   font-style: normal;
   font-weight: 700;
-  line-height: 1rem;
+  line-height: 1.25rem; /* 117.647% */
+  letter-spacing: -0.01063rem;
   margin: 0;
   padding: 0;
 `;

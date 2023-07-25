@@ -1,24 +1,23 @@
 import styled from 'styled-components';
 
 export const NewsLetterBackground = styled.div`
-  height: 17.375rem;
-  background: #2e68ff;
+  height: 17.45rem;
+  background: #c3c7d9;
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  margin-top: 1.25rem;
 `;
 
 export const TitleBox = styled.div`
   width: 55vw;
   height: 15rem;
-  background: #000000;
-  padding: 0rem 2.5rem;
+  background: ${({ theme }) => theme.primary};
+  padding: 2rem 3.94rem 2.21rem 2.44rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 1.875rem;
-  padding-top: 2rem;
-  padding-bottom: 2.2rem;
 `;
 
 export const NewsletterTitle = styled.h3`

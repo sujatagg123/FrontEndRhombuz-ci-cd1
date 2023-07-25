@@ -1,7 +1,7 @@
 import React from 'react';
 import Proptypes from 'prop-types';
 
-const AddBlue = ({ width = '15', height = '14', color = '#656B8A' }) => {
+const AddBlue = ({ width = '14', height = '13', color = '#656B8A' }) => {
   return (
     <>
       <svg

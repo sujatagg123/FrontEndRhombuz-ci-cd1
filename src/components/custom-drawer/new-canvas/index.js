@@ -34,6 +34,7 @@ import { axiosGet } from '../../../service';
 import { useQuery } from '@tanstack/react-query';
 import TileSelector from '../../tile-selector';
 import { formatNumber } from '../../../utils';
+import { useSelector } from 'react-redux';
 // import WriteIcon from '../../../assets/icons/WriteIcon';
 // import TileSelector from '../../tile-selector';
 // import { giveCheckedfor2dArr } from '../utility';
@@ -80,6 +81,10 @@ const NewCanDrawer = ({
       page: 1,
     });
   };
+
+  const selectedTheme = useSelector((store) => {
+    return store?.theme.theme || {};
+  });
 
   const getRecentSearchData = () => {
     return axiosGet('/recent-search', {});
@@ -150,7 +155,7 @@ const NewCanDrawer = ({
           <Heaerlblwrp>{heading}</Heaerlblwrp>
         </Headerleftwpr>
         <Iconwpr onClick={handleToggle}>
-          <X color={theme.dark.primary} size={28} />
+          <X color={theme[selectedTheme].primary} size={28} />
         </Iconwpr>
       </Headerwrap>
       <MainBoxwpr>
@@ -177,14 +182,14 @@ const NewCanDrawer = ({
         <ButtonsContainer>
           <ButtonBoxwpr
             onClick={handleToggle}
-            fontColor={theme.dark.secondaryText}
-            background={theme.dark.secondaryBackground}
+            fontColor={theme[selectedTheme].secondaryText}
+            background={theme[selectedTheme].secondaryBackground}
           >
             CANCEL
           </ButtonBoxwpr>
           <ButtonBoxwpr
-            fontColor={theme.dark.text}
-            background={theme.dark.primary}
+            fontColor={theme[selectedTheme].background}
+            background={theme[selectedTheme].primary}
             onClick={handleSubmit}
           >
             CREATE

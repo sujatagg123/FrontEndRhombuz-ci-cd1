@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {
   BookIconwpr,
   Contentwpr,
@@ -19,11 +19,17 @@ import SearchIcon2 from '../../assets/icons/SearchIcon2';
 import { axiosGet } from '../../service';
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query';
 import PropTypes from 'prop-types';
-import { Loadbtn, Loadbtnwpr } from '../search-popup/index.sc';
-import BookmarkIcon from '../../assets/icons/BookmarkIcon';
+// import { Loadbtn, Loadbtnwpr } from '../search-popup/index.sc';
+import { useSelector } from 'react-redux';
+import CreatedByIcon from '../../assets/icons/CreatedByIcon';
+import CreatedOnIcon from '../../assets/icons/CreatedOnIcon';
+import BookMarkIcon2 from '../../assets/icons/BookMarkIcon2';
+import { debounce } from '../../constants/debounce';
 
 const ItemComponent = ({ data, active, handleClick }) => {
-  console.log(data);
+  const selectedTheme = useSelector((store) => {
+    return store?.theme.theme || {};
+  });
 
   return (
     <>
@@ -44,26 +50,34 @@ const ItemComponent = ({ data, active, handleClick }) => {
               </Labeltxtwpr>
             </Contentwpr>
             <Contentwpr>
-              <Typetxtwpr active={active === dashboard.id}>
-                Created By:{' '}
-              </Typetxtwpr>
               <Labeltxtwpr active={active === dashboard.id}>
-                {dashboard.createBy}{' '}
+                <CreatedByIcon
+                  color={
+                    active === dashboard.id
+                      ? theme[selectedTheme].primary
+                      : theme[selectedTheme].secondaryText
+                  }
+                />
+                <Typetxtwpr active={active === dashboard.id}>
+                  {dashboard.createBy}{' '}
+                </Typetxtwpr>
               </Labeltxtwpr>
-              <Typetxtwpr active={active === dashboard.id}>
-                | Created On:{' '}
-              </Typetxtwpr>
               <Labeltxtwpr active={active === dashboard.id}>
-                {dashboard.createOn}
+                <CreatedOnIcon
+                  color={
+                    active === dashboard.id
+                      ? theme[selectedTheme].primary
+                      : theme[selectedTheme].secondaryText
+                  }
+                />
+                <Typetxtwpr active={active === dashboard.id}>
+                  {dashboard.createOn}
+                </Typetxtwpr>
               </Labeltxtwpr>
             </Contentwpr>
           </TextBoxwpr>
           <BookIconwpr>
-            <BookmarkIcon
-              activeColor={
-                active === dashboard.id ? theme.dark.secondaryBackground : ''
-              }
-            />
+            <BookMarkIcon2 />
           </BookIconwpr>
         </ItemComponentwpr>
       ))}
@@ -97,7 +111,7 @@ const DashboardList = ({ active, setActive }) => {
     // error,
     data,
     // isFetching,
-    // isLoading,
+    isLoading,
     // hasNextPage,
     fetchNextPage,
     // isFetchingNextPage,
@@ -111,7 +125,6 @@ const DashboardList = ({ active, setActive }) => {
       },
     }
   );
-  const length = data?.pages[0].data.total;
 
   const handleActive = (item) => {
     setActive(item.id);
@@ -123,9 +136,32 @@ const DashboardList = ({ active, setActive }) => {
     }
   }, [data?.pages, active, setActive]);
 
-  const handleLoad = () => {
-    fetchNextPage();
-  };
+  const selectedTheme = useSelector((store) => {
+    return store?.theme.theme || {};
+  });
+
+  const listBoxRef = useRef(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const handleLoadClick = debounce(() => {
+        fetchNextPage();
+      }, 1000);
+      const { scrollTop, scrollHeight, clientHeight } = listBoxRef.current;
+      if (scrollTop + clientHeight >= scrollHeight - 1) {
+        handleLoadClick();
+      }
+    };
+
+    const currentListBoxRef = listBoxRef.current;
+
+    currentListBoxRef.addEventListener('scroll', handleScroll);
+
+    return () => {
+      currentListBoxRef.removeEventListener('scroll', handleScroll);
+    };
+  }, [fetchNextPage]);
+
   const handleFilter = (type) => {
     setFiterType('');
     queryClient.invalidateQueries(['saved-searches', '']);
@@ -133,9 +169,9 @@ const DashboardList = ({ active, setActive }) => {
   return (
     <DashboardListwpr>
       <Dropdownfildwpr onClick={() => setShow(!show)}>
-        <ChevronDown color={theme.dark.secondaryText} />
+        <ChevronDown color={theme[selectedTheme].text} />
         <span>{title}</span>
-        <SearchIcon2 />
+        <SearchIcon2 color={theme[selectedTheme].text} />
         {show && (
           <OptionDropdwn
             items={dashbordtypeList}
@@ -144,7 +180,7 @@ const DashboardList = ({ active, setActive }) => {
           />
         )}
       </Dropdownfildwpr>
-      <ListBoxwpr>
+      <ListBoxwpr ref={listBoxRef}>
         {data?.pages?.map((page, i) => (
           <ItemComponent
             key={i}
@@ -153,16 +189,7 @@ const DashboardList = ({ active, setActive }) => {
             handleClick={handleActive}
           />
         ))}
-        {length - data?.pageParams.length * pageLimit > 0 && (
-          <Loadbtnwpr>
-            <Loadbtn onClick={handleLoad}>
-              load more +
-              {(data?.pageParams.length + 1) * pageLimit <= length
-                ? pageLimit
-                : length - data?.pageParams.length * pageLimit}
-            </Loadbtn>
-          </Loadbtnwpr>
-        )}
+        {isLoading && 'Loading...'}
       </ListBoxwpr>
     </DashboardListwpr>
   );

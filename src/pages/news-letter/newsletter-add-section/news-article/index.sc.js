@@ -13,6 +13,7 @@ export const NewsArticleWrp = styled.div`
   height: 17.5rem;
   background-image: ${({ src }) => `url(${src})`};
   background-size: cover;
+  background-position: center;
 `;
 
 export const NewsArticleWrpR = styled.div`

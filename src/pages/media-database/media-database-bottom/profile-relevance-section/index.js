@@ -4,8 +4,8 @@ import Proptypes from 'prop-types';
 import {
   DropDownWrp,
   MainWrp,
-  ProfileLengthSpan,
   RelevanceText,
+  SortByOptionsText,
   SortByText,
   SortWrp,
   TextContent,
@@ -41,10 +41,7 @@ const ProfileRelevanceSection = ({ profileNumber }) => {
   return (
     <MainWrp>
       <TopBarWrp>
-        <TextContent>
-          Profiles
-          <ProfileLengthSpan>({profileNumber})</ProfileLengthSpan>
-        </TextContent>
+        <TextContent>Profiles ({profileNumber})</TextContent>
         <SortWrp>
           <RelevanceText>Sort by</RelevanceText>
           <Wrp>
@@ -53,15 +50,18 @@ const ProfileRelevanceSection = ({ profileNumber }) => {
               <DropDownWrp>
                 {sortBy.map((item, i) => {
                   return (
-                    <SortByText key={i} onClick={() => handleSelect(item)}>
+                    <SortByOptionsText
+                      key={i}
+                      onClick={() => handleSelect(item)}
+                    >
                       {item.label}
-                    </SortByText>
+                    </SortByOptionsText>
                   );
                 })}
               </DropDownWrp>
             )}
           </Wrp>
-          <DownPolygon fill={'#fff'} />
+          <DownPolygon fill={'#585858'} />
         </SortWrp>
       </TopBarWrp>
     </MainWrp>

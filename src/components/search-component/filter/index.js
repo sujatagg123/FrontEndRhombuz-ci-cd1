@@ -8,6 +8,7 @@ const FilterComponent = ({
   searchFilter,
   handleFilterChange,
   editMode = false,
+  searchResult = false,
 }) => {
   const [filter, setFilter] = useState();
 
@@ -50,7 +51,7 @@ const FilterComponent = ({
               selected={selectedValue}
               onSelect={handleSelect}
               count={true}
-              newWidth="7"
+              newWidth={searchResult ? '9.9' : '10.5'}
               borderWidth="0"
               // isEditMode={isEditMode}
               key={i}
@@ -66,7 +67,7 @@ export default FilterComponent;
 
 FilterComponent.propTypes = {
   searchFilter: PropTypes.object,
-  //   isEditMode: PropTypes.bool,
   handleFilterChange: PropTypes.func,
   editMode: PropTypes.bool,
+  searchResult: PropTypes.bool,
 };

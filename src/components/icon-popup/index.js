@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Containerwraper, IconBtnwpr, IconPopwpr, Itemwpr } from './index.sc';
 
-const IconPop = ({ children, Items, handleClick }) => {
+const IconPop = ({ children, Items, handleClick, currentItem }) => {
   const [show, setShow] = useState(false);
   const iconPopRef = useRef(null);
 
@@ -30,7 +30,11 @@ const IconPop = ({ children, Items, handleClick }) => {
       {show && (
         <IconPopwpr className="iconpop">
           {Items.map((item, i) => (
-            <Itemwpr onClick={() => handleItemClick(item.id)} key={i}>
+            <Itemwpr
+              onClick={() => handleItemClick(item.id)}
+              key={i}
+              selected={currentItem && currentItem.id === item.id} // Set the selected prop here
+            >
               {item.label}
             </Itemwpr>
           ))}
@@ -50,6 +54,7 @@ IconPop.propTypes = {
     PropTypes.oneOfType([PropTypes.object, PropTypes.string])
   ),
   handleClick: PropTypes.func,
+  currentItem: PropTypes.string,
 };
 
 export default IconPop;

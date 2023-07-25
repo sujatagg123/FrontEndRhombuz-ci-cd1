@@ -3,10 +3,11 @@ import {
   BoldBoxwpr,
   Boldtxt,
   CheckBox,
+  CheckBoxesContainer,
   Contentwpr,
   Descwpr,
-  Infotxt,
-  Infowpr,
+  HeaderWrp,
+  IconWrp,
   Inputwpr,
   Labelbox,
   Labelwpr,
@@ -20,7 +21,6 @@ import {
   TextAreaContainer,
   Titlewpr,
 } from './index.sc';
-import InfoIcon from '../../assets/icons/InfoIcon';
 import Proptypes from 'prop-types';
 import {
   ButtonBoxwpr,
@@ -29,6 +29,8 @@ import {
   LeftfootBoxwpr,
 } from '../custom-drawer/index.sc';
 import { theme } from '../../constants/theme';
+import Close from '../../assets/icons/Close';
+import { useSelector } from 'react-redux';
 
 const SwitchBox = ({
   headline = 'Alert Me for Changes in Volume',
@@ -74,7 +76,7 @@ const SwitchBox = ({
         <Switchwpr type="checkbox" id="switch" onChange={handleCheckBox} />
       </BoldBoxwpr>
       {show && checked && (
-        <>
+        <CheckBoxesContainer>
           <MidBoxwpr>
             <CheckBox checked={check1} onChange={() => setCheck1(!check1)} />
             <Midtxt>{label1}</Midtxt>
@@ -98,11 +100,11 @@ const SwitchBox = ({
                 type="number"
                 disabled={!check2}
               />
-              %
+              <span>%</span>
             </PercBoxwpr>
           </MidBoxwpr>
           <Descwpr>{description}</Descwpr>
-        </>
+        </CheckBoxesContainer>
       )}
     </SwitchBoxwpr>
   );
@@ -119,6 +121,9 @@ SwitchBox.propTypes = {
 };
 
 const DashSearchDrwr = ({ toggler, heading = 'Save Search' }) => {
+  const selectedTheme = useSelector((store) => {
+    return store?.theme.theme || {};
+  });
   const handleToggle = () => {
     toggler(false);
   };
@@ -145,13 +150,22 @@ const DashSearchDrwr = ({ toggler, heading = 'Save Search' }) => {
 
   return (
     <Contentwpr onSubmit={submitHandler}>
-      <Infowpr>
+      {/* <Infowpr>
         <InfoIcon />
         <Infotxt>Save this search before creating dashboard</Infotxt>
-      </Infowpr>
-      <Titlewpr>{heading}</Titlewpr>
+      </Infowpr> */}
+      <HeaderWrp>
+        <Titlewpr>{heading}</Titlewpr>
+        <IconWrp onClick={handleToggle}>
+          <Close
+            width="2.12rem"
+            height="2.12rem"
+            color={theme[selectedTheme].text}
+          />
+        </IconWrp>
+      </HeaderWrp>
       <Labelbox>
-        <span>Name the title</span>
+        <span>Title</span>
         <Labelwpr htmlFor="title">
           <Inputwpr
             value={title}
@@ -177,21 +191,23 @@ const DashSearchDrwr = ({ toggler, heading = 'Save Search' }) => {
           description="Alerts are based on Search Volumes. You will receive alerts when the volume crosses 15% within the next 24 hours."
         />
       </SwitchContainer>
-      <FooterBoxwpr style={{ padding: 0 }}>
+      <FooterBoxwpr mt={1.25} style={{ padding: 0 }}>
         <LeftfootBoxwpr></LeftfootBoxwpr>
         <ButtonsContainer>
           <ButtonBoxwpr
+            className="btn cancel"
             onClick={handleToggle}
-            background={theme.dark.secondaryBackground}
-            fontColor={theme.dark.secondaryText}
+            background={theme[selectedTheme].background}
+            fontColor={theme[selectedTheme].secondaryText}
           >
-            CANCEL
+            Cancel
           </ButtonBoxwpr>
           <ButtonBoxwpr
-            background={theme.dark.primary}
-            fontColor={theme.dark.text}
+            className="btn"
+            background={theme[selectedTheme].primary}
+            fontColor={theme[selectedTheme].logoText}
           >
-            SAVE SEARCH
+            Save Search
           </ButtonBoxwpr>
         </ButtonsContainer>
       </FooterBoxwpr>

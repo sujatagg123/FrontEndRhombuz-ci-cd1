@@ -60,7 +60,6 @@ const AddItem = ({ addRow, rowIndex, columnIndex, searchSelect }) => {
 
   const onGraphSubmit = (value) => {
     // send the component data object, row and column
-    console.log(value);
     if (selectedCompOption === 'graphs') {
       addRow(
         {

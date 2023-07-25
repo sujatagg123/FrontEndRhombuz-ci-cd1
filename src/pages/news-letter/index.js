@@ -7,15 +7,16 @@ import { dashboardDetails } from '../../components/search-result/dashboard-mock'
 import { MainWrp } from './index.sc';
 import AppHeader from '../../components/app-header';
 import AppBG from '../../components/app-bg';
+import bgsr from '../../assets/img/bg/bg_sr.svg';
+import AppFooter from '../../components/app-footer';
 
 const NewsLetter = () => {
   const [searchSelect, setSearchSelect] = useState('');
-  const [isScrollable, setIsScrollable] = useState(true);
   return (
     <>
-      <AppBG />
+      <AppBG bg1h={'15.5%'} bg1={bgsr} />
       <AppHeader />
-      <MainWrp scroll={isScrollable}>
+      <MainWrp>
         <NewsLetterTopBar />
         <NewsLetterBottomBar
           searchSelect={searchSelect}
@@ -25,9 +26,9 @@ const NewsLetter = () => {
         <NewsLetterAddSection
           searchSelect={searchSelect}
           data={dashboardDetails}
-          setIsScrollable={setIsScrollable}
         />
       </MainWrp>
+      <AppFooter />
     </>
   );
 };

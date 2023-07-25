@@ -18,6 +18,10 @@ import { useQuery } from '@tanstack/react-query';
 import { axiosGet } from '../../service';
 import { Frames } from '../search-popup/contents';
 
+import { CrossButtonWrp } from '../../pages/news-letter/newsletter-top-section/top-bar/index.sc';
+import ArrowLeft from '../../assets/icons/ArrowLeft';
+import { useNavigate } from 'react-router';
+
 const Dashboard = () => {
   const [view, setView] = useState('dashboard');
 
@@ -34,12 +38,21 @@ const Dashboard = () => {
   });
   const length = data?.data?.total;
 
+  const navigate = useNavigate();
+
+  const handleClose = () => {
+    navigate('/');
+  };
+
   return (
     <DashboardPagewpr>
       <AppBG />
       <AppHeader />
       <Dashboardwpr>
         <DashboardHeader>
+          <CrossButtonWrp onClick={handleClose}>
+            <ArrowLeft color={'#656B8A'} width="2rem" />
+          </CrossButtonWrp>
           <HeaderTitlewpr>All Dashboards ({length})</HeaderTitlewpr>
           <HeaderRight>
             <Iconwpr

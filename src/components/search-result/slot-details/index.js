@@ -1,16 +1,23 @@
 import React, { useState } from 'react';
 import Proptypes from 'prop-types';
 import {
-  GraphTypeBtn,
-  GraphTypeBtnWrapper,
+  // BottomDeswpr,
+  // BottomInfowpr,
+  // GraphTypeBtn,
+  // GraphTypeBtnWrapper,
+  IconBox,
+  Iconwpr,
+  // Line,
+  // GraphTypeBtn,
+  // GraphTypeBtnWrapper,
   SlotBody,
-  SlotBodyTabBody,
-  SlotBodyTabWrp,
+  // SlotBodyTabBody,
+  // SlotBodyTabWrp,
   SlotDetailsMainWrp,
   SlotDetailsWrp,
   SlotHeader,
   SlotHeaderLeft,
-  SlotHeaderRight,
+  // SlotHeaderRight,
   SlotSubTitle,
   SlotTitle,
   TooltipBody,
@@ -18,15 +25,22 @@ import {
   TooltipBodyValue,
   TooltipTitle,
   TooltipWrapper,
+  // TopInfowpr,
 } from '../index.sc';
 import Loader from '../../loader';
 import PortalTooltip from '../../portal-tooltip';
 import { graphTypes, widgetMapping } from '../../../constants/widgets';
+import Edit2 from '../../../assets/icons/Edit2';
+import ExpandIcon from '../../../assets/icons/ExpandIcon';
+import { VerticleDots } from '../../../assets/icons/VerticleDots';
 
 const generateGraphComponent = (widget, defaultConfig, type, dashboardType) => {
-  // console.log(widgetMapping, dashboardType, widget.component);
+  console.log(widgetMapping, dashboardType, widget.component);
 
-  const { bentoView } = widgetMapping[dashboardType][widget.component];
+  const { bentoView } =
+    (widgetMapping[dashboardType] &&
+      widgetMapping[dashboardType][widget.component]) ||
+    {};
 
   const GraphComponent =
     type === 'dashboard' || type === 'l2'
@@ -53,7 +67,7 @@ const SlotDetails = ({
   const [toolTipPos, setToolTipPos] = useState({ left: 0, top: 0 });
   const [tooltipData, setTooltipData] = useState();
 
-  const [activeBtn, setActiveBtn] = useState('trendline');
+  // const [activeBtn, setActiveBtn] = useState('trendline');
 
   const tooltipEnabled =
     widgetMapping[widget.component]?.bentoView?.l2?.config?.enableTooltip;
@@ -97,20 +111,46 @@ const SlotDetails = ({
     handleMouseLeave,
   };
 
-  const handleTabBtnClick = (e, tab) => {
+  // const handleTabBtnClick = (e, tab) => {
+  //   e.stopPropagation();
+  //   setActiveBtn(tab);
+  // };
+
+  // const reducedHeight =
+  //   widget?.information && widget?.bottomDescription
+  //     ? 3
+  //     : widget?.information
+  //     ? 2
+  //     : widget?.bottomDescription
+  //     ? 1
+  //     : 0;
+
+  // console.log('reduced height: ', reducedHeight);
+  const handleClick = (e) => {
     e.stopPropagation();
-    setActiveBtn(tab);
+    console.log('clicked');
   };
 
   return (
     <SlotDetailsMainWrp>
+      <IconBox>
+        <Iconwpr width={'1.5rem'} height={'1.5rem'} onClick={handleClick}>
+          <ExpandIcon />
+        </Iconwpr>
+        <Iconwpr width={'1.5rem'} height={'1.5rem'} onClick={handleClick}>
+          <Edit2 />
+        </Iconwpr>
+        <Iconwpr width={'1.5rem'} height={'1.5rem'} onClick={handleClick}>
+          <VerticleDots />
+        </Iconwpr>
+      </IconBox>
       <SlotDetailsWrp>
         <SlotHeader>
           <SlotHeaderLeft>
             <SlotTitle>{widget.title}</SlotTitle>
             <SlotSubTitle>{widget.subTitle}</SlotSubTitle>
           </SlotHeaderLeft>
-          {widget.enableTabs && (
+          {/* {widget.enableTabs && (
             <SlotHeaderRight>
               <GraphTypeBtnWrapper>
                 <GraphTypeBtn
@@ -127,22 +167,23 @@ const SlotDetails = ({
                 </GraphTypeBtn>
               </GraphTypeBtnWrapper>
             </SlotHeaderRight>
-          )}
+          )} */}
         </SlotHeader>
         <SlotBody>
-          {widget.enableTabs && <SlotBodyTabWrp></SlotBodyTabWrp>}
-          <SlotBodyTabBody enableTabs={widget.enableTabs}>
-            {loader ? (
-              <Loader />
-            ) : (
-              generateGraphComponent(
-                activeBtn === 'trendline' ? widget : widget,
-                defaultConfig,
-                type,
-                dashboardType
-              )
-            )}
-          </SlotBodyTabBody>
+          {/* {widget.enableTabs && <SlotBodyTabWrp></SlotBodyTabWrp>}
+          <SlotBodyTabBody enableTabs={widget.enableTabs}> */}
+          {/* {widget?.information && (
+              <TopInfowpr>{widget?.information}</TopInfowpr>
+            )} */}
+          {loader ? (
+            <Loader />
+          ) : (
+            generateGraphComponent(widget, defaultConfig, type, dashboardType)
+          )}
+          {/* </SlotBodyTabBody> */}
+          {/* {widget?.bottomDescription && (
+              <BottomDeswpr>{widget?.bottomDescription}</BottomDeswpr>
+            )} */}
           {tooltipEnabled && enableTooltip && (
             <PortalTooltip
               isOpen={true}
@@ -164,6 +205,11 @@ const SlotDetails = ({
         </SlotBody>
       </SlotDetailsWrp>
     </SlotDetailsMainWrp>
+    // <Line />
+    // <BottomInfowpr>
+    //     {widget?.bottomInformation ||
+    //       'Insights : Media engagement of “covid vaccine” increased by 22% in jan 2021 “covid vaccine” increased by 22% in jan 2021'}
+    //   </BottomInfowpr>
   );
 };
 

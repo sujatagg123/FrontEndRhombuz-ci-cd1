@@ -37,7 +37,9 @@ export const userSlice = createSlice({
       .addCase(getUserDetails.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.data = payload;
+        localStorage.setItem('data', JSON.stringify(payload));
         state.token = payload?.token || '';
+        localStorage.setItem('token', payload?.token);
         state.userName = payload?.username || '';
         state.email = payload?.email || '';
         state.isSuccess = true;

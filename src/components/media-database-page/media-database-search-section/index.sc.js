@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const MainWrp = styled.div`
   width: 100%;
-  border-radius: 0.625rem;
+  border-radius: 0rem 0rem 0.625rem 0.625rem;
   border: 1px solid #f3f4f8;
   background: #fff;
   box-shadow: 0px 2px 2px 0px rgba(0, 0, 0, 0.05);

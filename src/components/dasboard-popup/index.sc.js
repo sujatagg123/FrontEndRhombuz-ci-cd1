@@ -13,7 +13,7 @@ export const PopupBackWrapper = styled.div`
 `;
 
 export const PopupContainer = styled.div`
-  width: 75vw;
+  width: ${({ width = '75vw' }) => width};
   max-height: 90vh;
   position: absolute;
   top: 50%;

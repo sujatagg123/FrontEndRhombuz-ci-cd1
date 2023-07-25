@@ -14,6 +14,7 @@ const Button = ({
   icon,
   iconPosition,
   onClick,
+  border,
 }) => {
   const theme = {};
   return (
@@ -29,6 +30,7 @@ const Button = ({
       iconPosition={iconPosition} // icon position added to specify the position of the icon
       onClick={!disable ? onClick : undefined} // callback event when users clicks on the button. note: will only trigger only if disable property is false or not given.
       disable={disable} // disable property to specify disable state
+      border={border} // border
     >
       {icon ? (
         <Styles.IconContainer
@@ -65,6 +67,7 @@ Button.propTypes = {
   btnStyle: PropTypes.object,
   disableStyle: PropTypes.object,
   onClick: PropTypes.func,
+  border: PropTypes.string,
 };
 Button.defaultProps = {
   // props default values

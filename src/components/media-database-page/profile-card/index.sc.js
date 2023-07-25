@@ -2,8 +2,7 @@ import styled from 'styled-components';
 
 export const MainWrp = styled.div`
   width: 100%;
-  min-height: 28.125rem;
-  max-height: fit-content;
+  height: 100%;
   border-radius: 10px;
   border: 1px solid #f3f4f8;
   background: #fff;
@@ -13,7 +12,7 @@ export const MainWrp = styled.div`
 
 export const CardTop = styled.div`
   height: 8.3rem;
-  background-color: rgba(198, 193, 244, 0.3);
+  background-color: rgba(236, 239, 243, 0.5);
   position: relative;
   display: flex;
   flex-direction: column;

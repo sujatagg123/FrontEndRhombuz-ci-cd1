@@ -133,8 +133,17 @@ export const roles = [
 ];
 
 export const bottomDetails = [
-  { label: 'Matches', value: 'matches' },
   { label: 'Reach', value: 'reach' },
   { label: 'Syndication', value: 'syndication' },
   { label: 'AVE', value: 'ave' },
+  { label: 'Sentiment', value: 'sentiment' },
+  { label: 'Matches', value: 'matches' },
+];
+
+export const Bottomkeys = [
+  { label: 'Link', value: 'link' },
+  { label: 'Date', value: 'date' },
+  { label: 'Author', value: 'author' },
+  { label: 'Maching key', value: 'machingKey' },
+  { label: 'Place', value: 'place' },
 ];

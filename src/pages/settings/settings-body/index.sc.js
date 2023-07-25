@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
 export const MainWrp = styled.div`
-  height: calc(100vh - 8.5rem);
+  height: calc(100vh - 9.5rem);
   background: transparent;
-  padding: 1rem 2rem 0rem 2rem;
+  padding: 0rem 2rem 0rem 2rem;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
 `;

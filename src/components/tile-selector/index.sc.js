@@ -20,7 +20,7 @@ export const ItemBoxwpr = styled.div`
     display: ${({ checked }) => (checked ? 'flex' : 'none')};
   }
   & > div > svg > path {
-    stroke: ${({ checked, theme }) => (checked ? theme.text : '#999999')};
+    stroke: ${({ checked, theme }) => (checked ? theme.background : '#999999')};
   }
   &:hover {
     border: ${({ checked, theme }) =>
@@ -33,10 +33,10 @@ export const ItemBoxwpr = styled.div`
     }
   }
   & > div {
-    color: ${({ checked, theme }) => (checked ? theme.text : '')};
+    color: ${({ checked, theme }) => (checked ? theme.background : '')};
   }
   > div > span {
-    color: ${({ checked, theme }) => (checked ? theme.text : '')};
+    color: ${({ checked, theme }) => (checked ? theme.background : '')};
   }
   position: relative;
   cursor: pointer;

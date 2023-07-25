@@ -31,6 +31,7 @@ import { ListBox } from './ListBox';
 import { theme } from '../../constants/theme';
 // import { giveCheckedfor2dArr } from './utility';
 import ItemsBox from './item-box';
+import { useSelector } from 'react-redux';
 
 const CustomDrawer = ({
   toggler = () => {},
@@ -53,6 +54,10 @@ const CustomDrawer = ({
   const [itemIndex, setItemIndex] = useState(0);
   const [checkedItems, setCheckedItems] = useState(0);
 
+  const selectedTheme = useSelector((store) => {
+    return store?.theme.theme || {};
+  });
+
   const handleClick = (index) => {
     setItemIndex(index);
   };
@@ -74,7 +79,7 @@ const CustomDrawer = ({
             <Heaerlblwrp>{heading}</Heaerlblwrp>
           </Headerleftwpr>
           <Iconwpr onClick={handleToggle}>
-            <X color={theme.dark.primary} size={28} />
+            <X color={theme[selectedTheme].primary} size={28} />
           </Iconwpr>
           <TransBtnbox isList={isList}>
             {!isList && (
@@ -107,8 +112,8 @@ const CustomDrawer = ({
             <>
               <TabsBox>
                 <Tabs
-                  activeColor={theme.dark.primary}
-                  inactiveColor={theme.dark.secondaryText}
+                  activeColor={theme[selectedTheme].primary}
+                  inactiveColor={theme[selectedTheme].secondaryText}
                   items={Titletabs}
                   paddingWrapper="0"
                   wraperBorderWidth="0"
@@ -148,14 +153,14 @@ const CustomDrawer = ({
               <ButtonsContainer>
                 <ButtonBoxwpr
                   onClick={handleToggle}
-                  fontColor={theme.dark.secondaryText}
-                  background={theme.dark.secondaryBackground}
+                  fontColor={theme[selectedTheme].secondaryText}
+                  background={theme[selectedTheme].secondaryBackground}
                 >
                   Cancel
                 </ButtonBoxwpr>
                 <ButtonBoxwpr
-                  fontColor={theme.dark.text}
-                  background={theme.dark.primary}
+                  fontColor={theme[selectedTheme].background}
+                  background={theme[selectedTheme].primary}
                   onClick={handleSubmit}
                 >
                   Update

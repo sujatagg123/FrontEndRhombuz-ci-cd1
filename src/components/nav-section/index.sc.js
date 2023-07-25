@@ -13,9 +13,10 @@ const navColors = ['#FF86A0', '#3DB7FB', '#5FCDD6', '#8B90A9'];
 
 export const Link = styled(NavLink)`
   text-decoration: none;
-  color: ${({ theme }) => theme.logoText};
+  color: ${({ theme }) => theme.text};
   width: 12.5rem;
-  background-color: ${({ index }) => navColors[index % navColors.length]};
+  // background-color: ${({ index }) => navColors[index % navColors.length]};
+  background-color: ${({ theme }) => theme.background};
   border-radius: 0.938rem;
   font-weight: 600;
   display: flex;
@@ -74,7 +75,7 @@ export const TileHeader = styled.div`
 `;
 export const TileLabel = styled.div`
   width: 85%;
-  color: ${({ theme }) => theme.logoText};
+  color: ${({ theme }) => theme.text};
   font-weight: 600;
   word-wrap: break-word;
   font-size: 1rem;
@@ -86,7 +87,7 @@ export const TileLabel = styled.div`
   text-overflow: ellipsis;
 `;
 export const TileValue = styled.div`
-  color: ${({ theme }) => theme.logoText};
+  color: ${({ theme }) => theme.secondaryText};
   font-weight: 600;
   font-size: 1.6rem;
   line-height: 1.6rem;

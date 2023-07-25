@@ -2,6 +2,9 @@ import { widgetImg } from '../assets/img/widgetsImg';
 import HorizontalMultiBar from '../components/horizontal-bar';
 import RecentSearches from '../components/recent-searches';
 import TopFiveSearches from '../components/top-five-searches';
+import UberStatsSentiment from '../components/uber-stats-sentiment';
+import UberStatsVolume from '../components/uber-stats-volume';
+import UberStats from '../components/user-stats';
 import {
   BigBubble,
   CoolColumn,
@@ -176,6 +179,7 @@ const graphConfig = {
   usmap: {},
   worldmap: {},
   stackedBar: { graphType: 'stack' },
+  butterfly: {},
 };
 
 export const graphTypes = {
@@ -295,15 +299,39 @@ export const graphTypes = {
     supportType: ['2d'],
   },
   uber_stats: {
-    component: BestBar,
+    component: UberStats,
     config: graphConfig.stackedBar,
     supportType: ['2d'],
+  },
+  uber_stats_volume: {
+    component: UberStatsVolume,
+    config: graphConfig.stackedBar,
+    supportType: ['2d'],
+  },
+  uber_stats_sentiment: {
+    component: UberStatsSentiment,
+    config: graphConfig.stackedBar,
+    supportType: ['2d'],
+  },
+  // profile_line , profile_radar
+  profile_line: {
+    label: 'Line',
+    component: LinearLine,
+    config: graphConfig.line,
+    supportType: ['1d', '2d'],
+  },
+  profile_radar: {
+    label: 'Radar',
+    component: Radar,
+    config: graphConfig.radar,
+    supportType: ['1d'],
   },
 };
 
 export const overviewWidgets = {
   result_over_time: {
     label: 'Result Over Time',
+    slotType: 'full',
     allowedGraphTypes: [graphTypes.column_fixed_width, graphTypes.line],
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
@@ -317,6 +345,7 @@ export const overviewWidgets = {
   media_type: {
     label: 'Media type',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -329,6 +358,7 @@ export const overviewWidgets = {
   word_cloud: {
     label: 'World Cloud',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -341,6 +371,7 @@ export const overviewWidgets = {
   top_source: {
     label: 'Top Source',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -353,6 +384,7 @@ export const overviewWidgets = {
   top_themes: {
     label: 'Top Themes',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -365,6 +397,7 @@ export const overviewWidgets = {
   outlet_breakdown: {
     label: 'Outlet Breakdown',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -377,6 +410,7 @@ export const overviewWidgets = {
   top_author: {
     label: 'Top Author',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -389,6 +423,7 @@ export const overviewWidgets = {
   geographical_breakdown: {
     label: 'Geographical Breakdown',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -404,6 +439,7 @@ export const brandWidgets = {
   volume_analysis: {
     label: 'Volume Analysis',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -416,6 +452,7 @@ export const brandWidgets = {
   sentiment_analysis: {
     label: 'Sentiment Analysis',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -428,6 +465,7 @@ export const brandWidgets = {
   sentiment_over_time: {
     label: 'Sentiment Over Time',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -440,6 +478,7 @@ export const brandWidgets = {
   coverage_over_time: {
     label: 'Coverage Over Time',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -452,6 +491,7 @@ export const brandWidgets = {
   media_type: {
     label: 'Media Type',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -464,6 +504,7 @@ export const brandWidgets = {
   reach_over_time: {
     label: 'Reach Over Time',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -479,6 +520,7 @@ export const industryWidgets = {
   volume_analysis: {
     label: 'Volume Analysis',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -491,6 +533,7 @@ export const industryWidgets = {
   sentiment_analysis: {
     label: 'Sentiment Analysis',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -503,6 +546,7 @@ export const industryWidgets = {
   coverage_by_journalist: {
     label: 'Coverage by Journalist',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -515,6 +559,7 @@ export const industryWidgets = {
   coverage_by_source: {
     label: 'Coverage by Source',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -527,6 +572,7 @@ export const industryWidgets = {
   companies_mentioned: {
     label: 'Campanies Mentioned',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -539,6 +585,7 @@ export const industryWidgets = {
   coverage_over_time: {
     label: 'Coverage Over Time',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -551,6 +598,7 @@ export const industryWidgets = {
   coverage_by_top_publications: {
     label: 'Coverage by top Publications',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -566,6 +614,7 @@ export const people = {
   volume_analysis: {
     label: 'Volume Analysis',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -578,6 +627,7 @@ export const people = {
   coverage_over_time: {
     label: 'Coverage Over Time',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -590,6 +640,7 @@ export const people = {
   top_journalist_by_sentiment: {
     label: 'Top Journalist by Sentiment',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -602,6 +653,7 @@ export const people = {
   top_source_by_sentiment: {
     label: 'Top Source by Sentiment',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -614,6 +666,7 @@ export const people = {
   popular_topics: {
     label: 'Popular Topics',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -626,6 +679,7 @@ export const people = {
   media_type: {
     label: 'Media Type',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -641,6 +695,7 @@ export const advancedDashboardWidgets = {
   campaigns_impact: {
     label: 'Campaign Monitor',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -653,6 +708,7 @@ export const advancedDashboardWidgets = {
   author_imapct: {
     label: 'Author Imapct',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -665,6 +721,7 @@ export const advancedDashboardWidgets = {
   sentiment_by_themes: {
     label: 'Sentiment by Themes',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -677,6 +734,7 @@ export const advancedDashboardWidgets = {
   message_congruence_by_Media: {
     label: 'Message Congruence by Media',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -689,6 +747,7 @@ export const advancedDashboardWidgets = {
   message_congruence_by_total_mentions: {
     label: 'Message Congruence by total mentions',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {
@@ -701,6 +760,7 @@ export const advancedDashboardWidgets = {
   pr_impact_scale: {
     label: 'PR Impact Scale',
     allowedGraphTypes: [],
+    slotType: 'half',
     bentoView: {
       l0: { component: LinearLine, config: graphConfig.line },
       l1: {

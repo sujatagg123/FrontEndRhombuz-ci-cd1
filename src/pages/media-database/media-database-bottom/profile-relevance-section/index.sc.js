@@ -13,21 +13,14 @@ export const TopBarWrp = styled.div`
 `;
 
 export const TextContent = styled.p`
-  /* color: #000; */
-  color: #fff;
-  font-size: 1rem;
+  color: ${({ theme }) => theme.secondaryText};
+  font-size: 1.25rem;
+  font-style: normal;
   font-weight: 700;
-  line-height: 1rem;
-  letter-spacing: -0.02rem;
+  line-height: 1.5625rem; /* 125% */
+  letter-spacing: -0.025rem;
   margin: 0;
   padding: 0;
-  display: flex;
-  gap: 0.25rem;
-`;
-
-export const ProfileLengthSpan = styled.span`
-  color: #999999;
-  font-weight: 400;
 `;
 
 export const SortWrp = styled.div`
@@ -38,23 +31,37 @@ export const SortWrp = styled.div`
 `;
 
 export const RelevanceText = styled.p`
-  color: #fff;
-  /* SmallText */
-  font-size: 0.75rem;
+  color: ${({ theme }) => theme.closeButton};
+  /* AMX_Style/Txt_13px_Medium */
+  font-size: 0.8125rem;
+  font-style: normal;
   font-weight: 500;
-  line-height: 1rem;
-  letter-spacing: -0.015rem;
+  line-height: 1.25rem; /* 153.846% */
+  letter-spacing: -0.01625rem;
   margin: 0;
   padding: 0;
 `;
 
 export const SortByText = styled.p`
-  color: #fff;
-  /* SmallText */
-  font-size: 0.75rem;
+  color: ${({ theme }) => theme.closeButton};
+  font-family: Inter;
+  font-size: 0.8125rem;
+  font-style: normal;
   font-weight: 500;
-  line-height: 1rem;
-  letter-spacing: -0.015rem;
+  line-height: 1.25rem; /* 153.846% */
+  letter-spacing: -0.01625rem;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+`;
+export const SortByOptionsText = styled.p`
+  color: ${({ theme }) => theme.background};
+  font-family: Inter;
+  font-size: 0.8125rem;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.25rem; /* 153.846% */
+  letter-spacing: -0.01625rem;
   margin: 0;
   padding: 0;
   cursor: pointer;
@@ -64,7 +71,7 @@ export const DropDownWrp = styled.div`
   position: absolute;
   right: 0;
   top: 1.25rem;
-  background: #5c5e60;
+  background: ${({ theme }) => theme.tableHeaderColor};
   z-index: 10;
   padding: 0.625rem;
   border-radius: 0.625rem;
@@ -75,7 +82,6 @@ export const DropDownWrp = styled.div`
 
 export const BottomProfilesMainWrp = styled.div`
   width: 100%;
-  border: 2px solid red;
 `;
 
 export const Wrp = styled.div`

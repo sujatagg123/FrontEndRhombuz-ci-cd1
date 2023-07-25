@@ -6,6 +6,11 @@ const ItemLabelWrp = styled.div`
   font-weight: 600;
   font-size: 0.75rem;
   color: ${({ theme }) => theme.secondaryText};
+  // display: inline-block;
+  // white-space: nowrap;
+  // overflow: hidden;
+  // text-overflow: ellipsis;
+  width: 85%;
 `;
 
 const ItemDesWrp = styled.div`
