@@ -1,4 +1,4 @@
-export const baseURL = 'http://localhost:3001'; // 'https://dummyjson.com'
+export const baseURL = 'http://52.53.247.149:3001/'; // 'https://dummyjson.com'
 
 export const dummyData = [
   {
