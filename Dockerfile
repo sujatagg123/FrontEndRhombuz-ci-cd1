@@ -4,9 +4,6 @@ FROM node:16.13-alpine AS builder
 # Set the working directory inside the container
 WORKDIR /app
 
-# Install git for Husky
-RUN apk update && apk add git
-
 # Copy package.json and package-lock.json (if available)
 COPY package*.json ./
 
@@ -19,8 +16,8 @@ ENV NODE_ENV=production
 ENV NEXT_PUBLIC_HELLO_WORLD=$NEXT_PUBLIC_HELLO_WORLD
 ENV SOME_OTHER_VARIABLE=$SOME_OTHER_VARIABLE
 
-# Install husky globally
-RUN npm install -g husky
+# Disable Husky during the Docker build
+ENV HUSKY_SKIP_INSTALL=1
 
 # Clear npm cache
 RUN npm cache clean --force
