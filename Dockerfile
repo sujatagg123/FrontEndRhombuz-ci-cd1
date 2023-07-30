@@ -4,6 +4,9 @@ FROM node:16.13-alpine AS builder
 # Set the working directory inside the container
 WORKDIR /app
 
+# Install git for Husky
+RUN apk update && apk add git
+
 # Copy package.json and package-lock.json (if available)
 COPY package*.json ./
 
@@ -21,6 +24,7 @@ RUN npm install -g husky
 
 # Clear npm cache
 RUN npm cache clean --force
+
 # Install app dependencies
 RUN npm install
 
