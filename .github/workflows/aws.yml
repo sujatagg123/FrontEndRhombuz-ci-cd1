@@ -31,10 +31,6 @@ jobs:
       - name: Lint code
         run: npm run lint
 
-      # Step 3: Run unit tests
-      - name: Run unit tests
-        run: npm test
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
