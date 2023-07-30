@@ -1,32 +1,29 @@
-# Use an official Node.js runtime as the base image
-FROM node:16.13-alpine
+# Stage 1: Build the application
+FROM node:16.13-alpine AS builder
 
-# Specify all your env variables here
-ARG prod=false
-ARG NEXT_PUBLIC_HELLO_WORLD
-ARG SOME_OTHER_VARIABLE 
-
-# Set the working directory inside the container
 WORKDIR /app
 
-# Copy package.json and package-lock.json (if available)
-COPY package*.json ./
-
-# Conditionally create a .env file if environment is production and print it's contents
-RUN if [ "$prod" = "true" ]; then \
-    echo "NEXT_PUBLIC_HELLO_WORLD=$NEXT_PUBLIC_HELLO_WORLD" >> .env.production && \
-    echo "SOME_OTHER_VARIABLE=$SOME_OTHER_VARIABLE" >> .env.production &&  cat .env.production; else echo "Environment local" ; fi
-
-# Clear npm cache
-RUN npm cache clean --force
 # Install app dependencies
-RUN npm install
+COPY package*.json ./
+RUN npm ci
 
 # Copy the entire React app to the container
 COPY . .
 
 # Build the React app
 RUN npm run build
+
+# Stage 2: Create the final production image
+FROM node:16.13-alpine
+
+WORKDIR /app
+
+# Copy only the necessary files from the builder stage
+COPY --from=builder /app/build ./build
+COPY package*.json ./
+
+# Install only production dependencies
+RUN npm ci --only=production
 
 # Expose the desired port (default is 3000 for React)
 EXPOSE 3000
