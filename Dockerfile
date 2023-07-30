@@ -16,6 +16,9 @@ ENV NODE_ENV=production
 ENV NEXT_PUBLIC_HELLO_WORLD=$NEXT_PUBLIC_HELLO_WORLD
 ENV SOME_OTHER_VARIABLE=$SOME_OTHER_VARIABLE
 
+# Install husky globally
+RUN npm install -g husky
+
 # Clear npm cache
 RUN npm cache clean --force
 # Install app dependencies
