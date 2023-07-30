@@ -1,6 +1,6 @@
 FROM node:16.13-alpine
 
-# Set the working directory inside the container
+# Set the working directory inside the container.
 WORKDIR /app
 
 # Copy package.json and package-lock.json (if available)
