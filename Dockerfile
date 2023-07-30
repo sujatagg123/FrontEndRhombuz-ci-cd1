@@ -1,29 +1,22 @@
-# Stage 1: Build the application
-FROM node:16.13-alpine AS builder
+# Use an official Node.js runtime as the base image
+FROM node:16.13-alpine
 
+# Set the working directory inside the container
 WORKDIR /app
 
-# Install app dependencies
+# Copy package.json and package-lock.json (if available)
 COPY package*.json ./
-RUN npm ci
+
+# Clear npm cache
+RUN npm cache clean --force
+# Install app dependencies
+RUN npm install
 
 # Copy the entire React app to the container
 COPY . .
 
 # Build the React app
 RUN npm run build
-
-# Stage 2: Create the final production image
-FROM node:16.13-alpine
-
-WORKDIR /app
-
-# Copy only the necessary files from the builder stage
-COPY --from=builder /app/build ./build
-COPY package*.json ./
-
-# Install only production dependencies
-RUN npm ci --only=production
 
 # Expose the desired port (default is 3000 for React)
 EXPOSE 3000
