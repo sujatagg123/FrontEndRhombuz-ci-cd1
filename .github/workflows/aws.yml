@@ -23,13 +23,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
         
-       # Runs a single command using the runners shell
-      - name: Lint code
-        run: echo "Linting repository!"
+      # Step 1: Install npm Dependencies
+      - name: Install npm Dependencies
+        run: npm install
 
+      # Step 2: Lint code
+      - name: Lint code
+        run: npm run lint
+
+      # Step 3: Run unit tests
       - name: Run unit tests
         run: npm test
-
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
