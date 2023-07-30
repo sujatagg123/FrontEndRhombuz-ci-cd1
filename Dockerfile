@@ -10,7 +10,7 @@ WORKDIR /app
 
 # Install app dependencies
 COPY package*.json ./
-RUN npm ci
+RUN npm install
 
 # Copy the entire React app to the container
 COPY . .
@@ -34,7 +34,7 @@ COPY package*.json ./
 COPY .env.production .env  # Copy the .env.production file to .env in the final stage
 
 # Install only production dependencies
-RUN npm ci --only=production
+RUN npm install --only=production
 
 # Expose the desired port (default is 3000 for React)
 EXPOSE 3000
