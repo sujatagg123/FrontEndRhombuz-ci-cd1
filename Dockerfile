@@ -1,7 +1,7 @@
-# image
-FROM node:16.13-alpine
+# Use the official Node.js 16 Alpine image as the base image
+FROM node:16-alpine
 
-# Set the working directory inside the container.
+# Set the working directory inside the container
 WORKDIR /app
 
 # Copy package.json and package-lock.json (if available)
@@ -9,6 +9,7 @@ COPY package*.json ./
 
 # Clear npm cache
 RUN npm cache clean --force
+
 # Install app dependencies
 RUN npm install
 
